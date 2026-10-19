@@ -1,0 +1,12 @@
+# Xcode
+.DS_Store
+*/.DS_Store
+*.xcuserstate
+project.xcworkspace/xcuserdata/
+*.xcuserdatad
+xcuserdata/
+DerivedData/
+build/
+*.hmap
+*.xccheckout
+*.moved-aside
