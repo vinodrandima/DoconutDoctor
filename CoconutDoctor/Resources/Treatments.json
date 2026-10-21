@@ -1,0 +1,347 @@
+[
+  {
+    "disease": "BudRot",
+    "language": "en",
+    "title": "Bud Rot",
+    "scientificName": "Phytophthora palmivora",
+    "description": "A lethal fungal disease that attacks the central spear leaf and growing point (crown) of the palm, especially prevalent during heavy rainfall and high humidity.",
+    "chemicalTreatment": [
+      "Cut down and clear rotting tissues around the central spear using a clean knife.",
+      "Apply 1% Bordeaux paste or a copper oxychloride slurry directly over the cut surface and surrounding leaf bases.",
+      "In early stages, drench the bud with Mancozeb (0.2%) or Metalaxyl-M based systemic fungicide."
+    ],
+    "organicTreatment": [
+      "Surgically excise infected tissues down to healthy white tissue, and burn all cut debris immediately.",
+      "Smear the crown area with a thick paste of neem cake powder, turmeric powder, and fresh wood ash.",
+      "Apply Trichoderma viride bio-fungicide formulation into the crown to suppress Phytophthora spores."
+    ],
+    "preventionTips": [
+      "Ensure efficient plantation drainage to prevent waterlogging during the monsoon season.",
+      "Sterilize tree-climbing ropes, machetes, and harvesting tools between trees using a 10% bleach solution.",
+      "If the bud is completely dead and collapsed, fell and incinerate the entire palm to protect neighboring trees."
+    ],
+    "consultationNote": "Always consult your local Agriculture Instructor (AI) or Coconut Cultivation Board (CCB) officer for site-specific dosages and certified chemical brands."
+  },
+  {
+    "disease": "BudRot",
+    "language": "si",
+    "title": "කරටි කුණුවීම",
+    "scientificName": "Phytophthora palmivora",
+    "description": "අධික වැසි සහ තෙතමනය සහිත කාලගුණයේදී Phytophthora දිලීරය මගින් ගසේ කරටියට හානි කරන භයානක රෝගයකි. මැද ලපටි ගොබය කහ වී, මැලවී, පාමුලින් කුණු වී දුඟද හමයි.",
+    "chemicalTreatment": [
+      "පිරිසිදු පිහියකින් කුණු වූ ගොබ කොටස් හොඳින් කපා ඉවත් කරන්න.",
+      "කැපූ ස්ථානය සහ අවට පත්‍ර පාදම මත 1% බෝඩෝ මිශ්‍රණය (Bordeaux paste) හෝ කොපර් ඔක්සික්ලෝරයිඩ් ආලේප කරන්න.",
+      "රෝගයේ මුල් අවස්ථාවේ නම් මැන්කොසෙබ් (Mancozeb 0.2%) හෝ මෙටලැක්සිල් අඩංගු දිලීර නාශක දියරයක් කරටියට වත් කරන්න."
+    ],
+    "organicTreatment": [
+      "ආසාදිත කුණු වූ කොටස් නිරෝගී සුදු පැහැ පටක හමුවන තෙක් කපා ඉවත් කර, ඉවත් කළ කොටස් වහාම පුලුස්සා දමන්න.",
+      "කොහොඹ ඇට කුඩු, කහ කුඩු සහ දර අළු එකට මිශ්‍ර කර සාදාගත් පේස්ට් එකක් කරටිය මත ආලේප කරන්න.",
+      "ට්‍රයිකොඩර්මා (Trichoderma viride) මිශ්‍ර ජෛව දිලීර නාශක දියර කරටියට යොදන්න."
+    ],
+    "preventionTips": [
+      "වැසි සමයේදී වත්තේ ජලය හොඳින් බැසයාමට කාණු පද්ධතිය සකස් කරන්න.",
+      "ගස් කැපීමට සහ ගෙඩි කැඩීමට ගන්නා පිහි සහ කඹ සෑම විටම විෂබීජ නාශක යොදා පිරිසිදු කරන්න.",
+      "කරටිය සම්පූර්ණයෙන්ම කුණු වී ගස මියගොස් ඇත්නම්, අනෙක් ගස් ආරක්ෂා කරගැනීම සඳහා ගස මුලින් කපා පුලුස්සා දමන්න."
+    ],
+    "consultationNote": "රසායනික දිලීර නාශක මිලදී ගැනීමට සහ භාවිතයට පෙර නිවැරදි මාත්‍රාව දැනගැනීමට ප්‍රාදේශීය කෘෂිකර්ම උපදේශක (AI) හෝ පොල් වගා කිරීමේ මණ්ඩලයේ (CCB) නිලධාරී හමුවන්න."
+  },
+  {
+    "disease": "BudRot",
+    "language": "ta",
+    "title": "குருத்து அழுகல் நோய்",
+    "scientificName": "Phytophthora palmivora",
+    "description": "அதிக மழை மற்றும் ஈரப்பதம் உள்ள காலங்களில் ஏற்படும் தீவிர பூஞ்சை நோய். நடுக் குருத்து இலை மஞ்சள் நிறமாகி, அழுகி, துர்நாற்றத்துடன் கீழே விழும்.",
+    "chemicalTreatment": [
+      "சுத்தமான கத்தியால் அழுகிய பகுதிகளை வெட்டி அப்புறப்படுத்தவும்.",
+      "வெட்டிய பகுதியில் 1% போர்டோ பசை (Bordeaux paste) அல்லது காப்பர் ஆக்சிகுளோரைடு பூசவும்.",
+      "தொடக்க நிலையில் மான்கோசெப் (Mancozeb 0.2%) அல்லது மெட்டலாக்சில் பூஞ்சைக்கொல்லியை குருத்தில் ஊற்றவும்."
+    ],
+    "organicTreatment": [
+      "அழுகிய பாகங்களை முழுமையாக வெட்டி உடனடியாக தீயிட்டு எரிக்கவும்.",
+      "வேப்பம் புண்ணாக்கு, மஞ்சள் பொடி மற்றும் மரச்சாம்பல் கலந்த பசையை குருத்துப் பகுதியில் பூசவும்.",
+      "டிரைக்கோடெர்மா பூஞ்சை கரைசலை குருத்துப் பகுதியில் இட்டு நோயை கட்டுப்படுத்தவும்."
+    ],
+    "preventionTips": [
+      "தோட்டத்தில் மழைக்காலத்தில் தண்ணீர் தேங்காமல் முறையான வடிகால் அமைக்கவும்.",
+      "மரமேற பயன்படும் கயிறுகள் மற்றும் கத்திகளை சுத்தமாக வைத்திருக்கவும்.",
+      "மரம் முழுமையாக பட்டுப்போனால், மற்ற மரங்களுக்கு நோய் பரவாமல் இருக்க அதை வெட்டி எரிக்கவும்."
+    ],
+    "consultationNote": "இரசாயன மருந்துகளை உபயோகிக்கும் முன் உங்கள் பகுதி கமநல சேவை அல்லது தென்னை பயிர்ச்செய்கை சபை அதிகாரியை அணுகி சரியான அளவை பெறவும்."
+  },
+  {
+    "disease": "GreyLeafSpot",
+    "language": "en",
+    "title": "Grey Leaf Spot",
+    "scientificName": "Pestalotiopsis palmarum",
+    "description": "A fungal foliar disease producing oval spots with grey centers and dark reddish-brown margins on older leaflets. In severe cases, leaflets wither and dry up.",
+    "chemicalTreatment": [
+      "Spray foliage thoroughly with Mancozeb (2g per liter of water) or Carbendazim (1g per liter) at the onset of spots.",
+      "Repeat fungicide spray at 14-day intervals during overcast, wet spells if new spots emerge.",
+      "Apply Copper Oxychloride 50% WP spray to both upper and lower surfaces of affected fronds."
+    ],
+    "organicTreatment": [
+      "Apply wood ash (rich in potassium) and composted cow dung around the root basin to reinforce leaf cell walls.",
+      "Spray 5% diluted neem oil emulsion mixed with soap water across affected leaflets.",
+      "Incorporate bio-fertilizers and mycorrhizal fungi into soil to enhance micronutrient uptake."
+    ],
+    "preventionTips": [
+      "Prune and destroy heavily blighted lower fronds; do not leave infected fronds lying on the ground.",
+      "Maintain balanced palm nutrition by supplying recommended muriate of potash (MOP) to prevent leaf weakness.",
+      "Ensure proper sunlight penetration by spacing palms adequately and controlling high-canopy shade trees."
+    ],
+    "consultationNote": "Check with your local Agricultural Instructor for recommended fungicide brands and safety intervals before harvesting nuts."
+  },
+  {
+    "disease": "GreyLeafSpot",
+    "language": "si",
+    "title": "අළු පැහැ කොළ පුල්ලි රෝගය",
+    "scientificName": "Pestalotiopsis palmarum",
+    "description": "Pestalotiopsis දිලීරය මගින් මෝරන ලද පහළ පොල් අතුවල අළු පැහැති මැද කොටසක් සහ තද දුඹුරු දාරයක් සහිත ඕවලාකාර ලප ඇති කරන රෝගයකි. කොළ වියළී අස්වැන්න අඩු වේ.",
+    "chemicalTreatment": [
+      "මැන්කොසෙබ් (වතුර ලීටරයකට ග්‍රෑම් 2ක්) හෝ කාබෙන්ඩසිම් (වතුර ලීටරයකට ග්‍රෑම් 1ක්) දියකර කොළ වලට හොඳින් ඉසින්න.",
+      "වැසි සහිත කාලගුණයේදී රෝගය පැතිරේ නම් දින 14 කට පසු නැවත ඉසින්න.",
+      "කොපර් ඔක්සික්ලෝරයිඩ් 50% WP දිලීර නාශකය කොළ වල යටි පැත්තටද ලැබෙන සේ යොදන්න."
+    ],
+    "organicTreatment": [
+      "පොටෑසියම් බහුල දර අළු සහ හොඳින් දිරූ ගොම පොහොර ගසේ මුල් වටා දමා පස සරු කරන්න.",
+      "කොහොඹ තෙල් සහ සබන් දියර මිශ්‍රණය (5%) කොළ මතට ඉසින්න.",
+      "කොම්පෝස්ට් පොහොර සමඟ ජීවාණු නාශක යොදා ගසේ ස්වභාවික ප්‍රතිශක්තිය වැඩි කරන්න."
+    ],
+    "preventionTips": [
+      "දැඩි ලෙස ආසාදිත පහළ වියළි අතු කපා ඉවත් කර ගිනි තබන්න; වත්තේ බිම දමා නොතබන්න.",
+      "ගසට නිසි පරිදි නිර්දේශිත පොටෑෂ් (MOP) පොහොර යොදන්න. පොටෑසියම් ඌනතාවය ඇති විට රෝගය වේගයෙන් පැතිරේ.",
+      "අධික සෙවණ පාලනය කර ගසට හොඳින් හිරු එළිය සහ වාතාශ්‍රය ලැබීමට සලස්වන්න."
+    ],
+    "consultationNote": "දිලීර නාශක ඉසීමට පෙර නිවැරදි මිශ්‍රණ අනුපාත සඳහා ඔබ ප්‍රදේශයේ කෘෂිකර්ම පර්යේෂණ හා නිෂ්පාදන සහකාර (ARPA) හෝ කෘෂිකර්ම උපදේශකගෙන් උපදෙස් ලබාගන්න."
+  },
+  {
+    "disease": "GreyLeafSpot",
+    "language": "ta",
+    "title": "சாம்பல் நிற இலைப்புள்ளி நோய்",
+    "scientificName": "Pestalotiopsis palmarum",
+    "description": "முதிர்ந்த தென்னை மட்டைகளில் சாம்பல் நிற மையமும் அடர் பழுப்பு நிற ஓரங்களும் கொண்ட புள்ளிகள் உருவாகும் பூஞ்சை நோய். இலைகள் காய்ந்து கருகிவிடும்.",
+    "chemicalTreatment": [
+      "மான்கோசெப் (1 லீட்டர் நீருக்கு 2 கிராம்) அல்லது கார்பென்டாசிம் இலைகளில் நன்கு படியுமாறு தெளிக்கவும்.",
+      "மழைக்காலத்தில் நோய் தீவிரமடைந்தால் 14 நாட்களுக்கு ஒருமுறை மீண்டும் தெளிக்கவும்.",
+      "காப்பர் ஆக்சிகுளோரைடு கரைசலை இலைகளின் இருபுறமும் தெளிக்கவும்."
+    ],
+    "organicTreatment": [
+      "பொட்டாசியம் சத்து நிறைந்த மரச்சாம்பல் மற்றும் மக்கிய தொழுவுரத்தை வேர்ப்பகுதியில் இடவும்.",
+      "5% வேப்ப எண்ணெய் மற்றும் சவர்க்கார நீர் கரைசலை இலைகளில் தெளிக்கவும்.",
+      "மண்ணின் ஆரோக்கியத்தை மேம்படுத்த மண்புழு உரம் இடவும்."
+    ],
+    "preventionTips": [
+      "அதிகமாக பாதிக்கப்பட்ட கீழ் மட்டைகளை வெட்டி அப்புறப்படுத்தி எரிக்கவும்.",
+      "பரிந்துரைக்கப்பட்ட பொட்டாஷ் (MOP) உரத்தை சீராக வழங்கி மரத்தின் நோய் எதிர்ப்பு சக்தியை கூட்டவும்.",
+      "மரங்களுக்கு போதிய சூரிய ஒளி மற்றும் காற்று கிடைப்பதை உறுதி செய்யவும்."
+    ],
+    "consultationNote": "மருந்துகளை தெளிப்பதற்கு முன் கமநல சேவை உத்தியோகத்தரிடம் சரியான அளவை ஆலோசிக்கவும்."
+  },
+  {
+    "disease": "LeafRot",
+    "language": "en",
+    "title": "Leaf Rot",
+    "scientificName": "Colletotrichum / Fusarium complex",
+    "description": "Causes progressive blackening, rotting, and wilting of leaflet tips, frequently linked with root stress or water deficit. Leaves appear ragged as rotten tips snap off in the wind.",
+    "chemicalTreatment": [
+      "Pour a solution of Hexaconazole (5% EC, 2ml in 300ml water) into the innermost leaf axils around the crown.",
+      "Alternatively, drench the spindle leaf base with Mancozeb (3g in 300ml water) twice a year (May/June and October/November).",
+      "Cut away rotten distal portions of leaflets before fungicide application."
+    ],
+    "organicTreatment": [
+      "Apply enriched compost inoculated with Trichoderma harzianum (50g per palm) to the root zone.",
+      "Mulch around the base (1.8m radius) with 2 layers of coconut husks convex side up to retain moisture and foster soil microbes.",
+      "Apply crushed neem cake (5 kg/palm) annually to condition the soil and protect roots."
+    ],
+    "preventionTips": [
+      "Avoid root damage from deep tractor plowing within 2 meters of the palm trunk.",
+      "Provide supplemental bucket or drip irrigation during hot dry spells (minimum 40 liters twice a week).",
+      "Apply magnesium sulfate (Epsom salt) if fronds show yellowing deficiency alongside rot symptoms."
+    ],
+    "consultationNote": "Dosages must be verified with your regional Coconut Cultivation Board Extension Officer before crown pouring."
+  },
+  {
+    "disease": "LeafRot",
+    "language": "si",
+    "title": "පත්‍ර කුණුවීමේ රෝගය",
+    "scientificName": "Colletotrichum / Fusarium complex",
+    "description": "පත්‍රිකා වල අග කොටස් කළු වී, කුණු වී, සුළඟට කැඩී යාම සිදු වේ. බොහෝවිට ගසේ මුල් වල දුර්වලතාවය හෝ නියඟය නිසා ගසේ සවිමත් බව අඩු වූ විට හටගනී.",
+    "chemicalTreatment": [
+      "හෙක්සකොනසෝල් (Hexaconazole 5% EC මිලිලීටර් 2 ක් වතුර මිලිලීටර් 300 ක දියකර) කරටිය වටා ඇති පත්‍ර කෝණ වලට වත් කරන්න.",
+      "නැතහොත් මැන්කොසෙබ් (ග්‍රෑම් 3ක් වතුර මිලිලීටර් 300 ක) වසරකට දෙවරක් (මැයි/ජූනි සහ ඔක්තෝබර්/නොවැම්බර්) කරටියට වත් කරන්න.",
+      "බෙහෙත් යෙදීමට පෙර කුණු වූ අතු අගිසි කපා ඉවත් කරන්න."
+    ],
+    "organicTreatment": [
+      "ට්‍රයිකොඩර්මා (Trichoderma) මිශ්‍ර කොම්පෝස්ට් පොහොර ග්‍රෑම් 50ක් ගසේ පාමුලට දමන්න.",
+      "ගස වටා මීටර් 1.8 ක රවුමක පොල් ලෙලි තට්ටු දෙකක් උඩු අතට අතුරා තෙතමනය රකින්න.",
+      "වසරකට වරක් කොහොඹ පින්නා (Neem cake) කිලෝ 5ක් ගස මුලට යොදන්න."
+    ],
+    "preventionTips": [
+      "ගසේ කඳට මීටර් 2ක් ඇතුළත ගැඹුරට සී සෑමෙන් වළකින්න (මුල් කැඩීමෙන් රෝග බෝවේ).",
+      "දැඩි වියළි කාලගුණයේදී සතියකට දෙවරක් ගසට ජලය ලීටර් 40ක් වත් සපයන්න.",
+      "කොළ කහ පැහැ වේ නම් මැග්නීසියම් සල්ෆේට් (Epsom salt) පසට එක් කරන්න."
+    ],
+    "consultationNote": "කරටියට දිලීර නාශක දැමීමට පෙර නිවැරදි ප්‍රමාණය පොල් වගා කිරීමේ මණ්ඩලයේ ව්‍යාප්ති නිලධාරීවරයාගෙන් විමසන්න."
+  },
+  {
+    "disease": "LeafRot",
+    "language": "ta",
+    "title": "இலை அழுகல் நோய்",
+    "scientificName": "Colletotrichum / Fusarium complex",
+    "description": "மட்டைகளின் நுனிப்பகுதி கருப்பாகி அழுகி காற்றில் முறிந்து விழும் நிலை. வேர் பலவீனமடையும் போது இந்நோய் எளிதில் தாக்கும்.",
+    "chemicalTreatment": [
+      "ஹெக்சாகோனசோல் (Hexaconazole 2 மி.லீ 300 மி.லீ நீரில்) கரைசலை மட்டைகளின் இடுக்குகளில் ஊற்றவும்.",
+      "அல்லது மான்கோசெப் பூஞ்சைக்கொல்லியை வருடத்தில் இருமுறை குருத்து இடுக்குகளில் இடவும்.",
+      "மருந்து ஊற்றுவதற்கு முன் அழுகிய நுனி இலைகளை வெட்டிவிடவும்."
+    ],
+    "organicTreatment": [
+      "டிரைக்கோடெர்மா கலந்த சேதன பசளையை வேர்ப்பகுதியில் இடவும்.",
+      "மரத்தை சுற்றி 1.8 மீற்றர் சுற்றளவில் தென்னை மட்டைகளை அடுக்கி ஈரப்பதத்தை காக்கவும்.",
+      "வருடத்திற்கு 5 கிலோ வேப்பம் புண்ணாக்கு இடவும்."
+    ],
+    "preventionTips": [
+      "மரத்தின் அருகில் ஆழமாக உழுவதை தவிர்க்கவும் (வேர்கள் அறுபடாமல் காக்கவும்).",
+      "வறட்சி காலங்களில் வாரத்திற்கு இருமுறை நீர் பாய்ச்சவும்.",
+      "இலைகள் மஞ்சள் நிறமானால் மக்னீசியம் சத்து இடவும்."
+    ],
+    "consultationNote": "குருத்தில் மருந்து ஊற்றுவதற்கு முன் பிரதேச கமநல சேவை உத்தியோகத்தரிடம் ஆலோசனை பெறவும்."
+  },
+  {
+    "disease": "StemBleeding",
+    "language": "en",
+    "title": "Stem Bleeding",
+    "scientificName": "Thielaviopsis paradoxa",
+    "description": "Characterized by exudation of dark reddish-brown liquid through longitudinal bark cracks, mostly on the lower trunk. Decay spreads inward creating internal hollows.",
+    "chemicalTreatment": [
+      "Chisel out all black/decayed trunk tissues down to healthy yellowish-white fibrous wood.",
+      "Swab the cleaned wound with a systemic fungicide such as Carbendazim (0.2%) or Copper Oxychloride slurry.",
+      "Allow to dry for 24-48 hours, then apply hot coal tar or pruning wound sealant to prevent re-infection."
+    ],
+    "organicTreatment": [
+      "Scrape infected sap area and paste generously with fresh neem seed kernel extract and cow dung slurry.",
+      "Apply raw Bordeaux paste (100g Copper Sulfate + 100g Quicklime in 1 liter water) over the scraped wound.",
+      "Apply 5 kg neem cake around the palm root zone combined with Trichoderma to fight soil-borne inoculum."
+    ],
+    "preventionTips": [
+      "Prevent physical damage or axe gouges to the trunk during harvesting or field maintenance.",
+      "Improve soil drainage; water stagnation at the palm base promotes pathogen entry.",
+      "Paint the bottom 2 meters of the trunk with lime wash containing 1% copper sulfate annually."
+    ],
+    "consultationNote": "Seek guidance from your Agrarian Services Center officer before scraping deep trunk cavities to avoid structural collapse."
+  },
+  {
+    "disease": "StemBleeding",
+    "language": "si",
+    "title": "කඳෙන් දියර ගැලීමේ රෝගය",
+    "scientificName": "Thielaviopsis paradoxa",
+    "description": "පොල් කඳේ පහළ කොටසේ ඇතිවන පැලුම් වලින් තද රතු-දුඹුරු පැහැති දුම්මල වැනි දියරයක් ගලා ඒම. කඳ අභ්‍යන්තරය දිරාපත් වී කුහර සෑදී ගස කඩා වැටීමට ඉඩ ඇත.",
+    "chemicalTreatment": [
+      "කඳේ දිරාපත් වූ සහ කළු පැහැති සියලුම කොටස් නිරෝගී සුදු/කහ ලී කොටස හමුවන තෙක් වක් පිහියකින් හොඳින් සූරා ඉවත් කරන්න.",
+      "සූරාගත් තුවාලය මත කාබෙන්ඩසිම් (0.2%) හෝ කොපර් ඔක්සික්ලෝරයිඩ් දිලීර නාශක දියරයක් හොඳින් ආලේප කරන්න.",
+      "පැය 24-48ක් වියළෙන්නට හැර, ඒ මත උණුසුම් තාර (Coal tar) හෝ තුවාල ආවරණ පේස්ට් එකක් ආලේප කරන්න."
+    ],
+    "organicTreatment": [
+      "තුවාලය සූරා දැමූ පසු ඒ මත ඝන බෝඩෝ පේස්ට් එකක් (තඹ සල්ෆේට් + හුනු මිශ්‍රණය) ආලේප කරන්න.",
+      "කොහොඹ ඇට කුඩු සහ නැවුම් ගොම මිශ්‍රණයක් තුවාලය මත ඝනකමට ආලේප කරන්න.",
+      "වසරකට වරක් ගස පාමුලට කොහොඹ පින්නා කිලෝ 5ක් සහ ට්‍රයිකොඩර්මා මිශ්‍ර කොම්පෝස්ට් යොදන්න."
+    ],
+    "preventionTips": [
+      "පොල් කැඩීමේදී, මට්ටම් කිරීමේදී හෝ වල් නෙලීමේදී ගසේ කඳට පොරෝ හෝ පිහි පහර වැදී තුවාල වීම වළක්වන්න.",
+      "ගස පාමුල වතුර රැඳීම වළක්වා කාණු කපා ජලය බැසයාමට සලස්වන්න.",
+      "වසරකට වරක් ගසේ කඳේ පහළ මීටර් 2 ක කොටසේ හුණු සහ මයිලෝත්ත (Copper sulfate) මිශ්‍ර ආලේපනයක් ගාන්න."
+    ],
+    "consultationNote": "කඳ ගැඹුරට සූරා දැමීමට පෙර ගසේ ශක්තිය පරීක්ෂා කරගැනීමට පොල් පර්යේෂණ ආයතනයේ (CRI) හෝ කෘෂිකර්ම නිලධාරීවරයෙකුගේ උපදෙස් ලබාගන්න."
+  },
+  {
+    "disease": "StemBleeding",
+    "language": "ta",
+    "title": "தண்டு வடியும் நோய்",
+    "scientificName": "Thielaviopsis paradoxa",
+    "description": "தென்னை மரத் தண்டில் ஏற்படும் வெடிப்புகள் வழியாக செம்பழுப்பு நிற திரவம் கசிந்து வழியும் நோய். மரத்தின் உட் பகுதி உளுத்து மரம் வலுவிழக்கும்.",
+    "chemicalTreatment": [
+      "பாதிக்கப்பட்ட கருமை நிற தண்டு பகுதியை ஆரோக்கியமான மரம் தெரியும் வரை செதுக்கி அகற்றவும்.",
+      "செதுக்கிய பகுதியில் கார்பென்டாசிம் அல்லது காப்பர் பூஞ்சைக்கொல்லியை பூசவும்.",
+      "நன்கு உலர்ந்த பின் அதன் மீது சூடான தார் (Coal tar) பூசி துவாரங்களை மூடவும்."
+    ],
+    "organicTreatment": [
+      "செதுக்கிய காயத்தில் கெட்டியான போர்டோ பசையை பூசவும்.",
+      "வேப்பங்கொட்டை பொடி மற்றும் சாணத்தை பிசைந்து காயத்தின் மேல் பற்று போடவும்.",
+      "மரத்தின் வேர்ப்பகுதியில் 5 கிலோ வேப்பம் புண்ணாக்கு இடவும்."
+    ],
+    "preventionTips": [
+      "மரம் வெட்டும் போதும், தேங்காய் பறிக்கும் போதும் தண்டில் காயங்கள் ஏற்படாமல் பார்த்துக் கொள்ளவும்.",
+      "மண்ணில் நீர் தேங்காமல் வடிகால் வசதியை சீராக்கவும்.",
+      "வருடத்திற்கு ஒருமுறை மரத்தின் அடி மரத்தில் 2 மீட்டர் உயரத்திற்கு சுண்ணாம்பு பூசவும்."
+    ],
+    "consultationNote": "தண்டை ஆழமாக செதுக்கும் முன் கமநல சேவை உத்தியோகத்தரிடம் ஆலோசனை பெறவும்."
+  },
+  {
+    "disease": "Healthy",
+    "language": "en",
+    "title": "Healthy Coconut Palm",
+    "scientificName": "Cocos nucifera",
+    "description": "No symptoms of major fungal spots, crown rot, or trunk bleeding detected. Leaves are actively photosynthesizing with balanced nutrition.",
+    "chemicalTreatment": [
+      "No chemical fungicides or pesticides are required!",
+      "Apply CRI recommended Adult Palm Mixture (APM) fertilizer at the rate of 3 kg per palm annually in two split doses (Yala and Maha seasons).",
+      "Apply 1 kg of dolomite annually in acidic laterite soils to supply magnesium and calcium."
+    ],
+    "organicTreatment": [
+      "Apply 25 to 30 kg of well-rotted farmyard manure, cattle dung, or green leaf manure per palm annually.",
+      "Grow leguminous cover crops (such as Mucuna bracteata or Calopogonium) between palm rows to fix atmospheric nitrogen.",
+      "Bury coconut husks in a semi-circular trench 2 meters away from the trunk to harvest rainwater."
+    ],
+    "preventionTips": [
+      "Keep a 1.5-meter radius around the palm trunk completely free of creeping weeds and grass.",
+      "Inspect the crown and fronds once a month for early signs of rhinoceros beetle holes or red palm weevil bites.",
+      "Ensure sufficient irrigation during prolonged dry months (at least 45 liters per palm twice weekly)."
+    ],
+    "consultationNote": "Keep in touch with your local Agrarian Services Center for subsidized CRI fertilizer distribution schedules."
+  },
+  {
+    "disease": "Healthy",
+    "language": "si",
+    "title": "නිරෝගී පොල් ගස",
+    "scientificName": "Cocos nucifera",
+    "description": "කරටි කුණුවීම, කොළ පුල්ලි හෝ කඳෙන් දියර ගැලීමේ කිසිදු රෝග ලක්ෂණයක් නොමැති නිරෝගී, ශක්තිමත් පත්‍ර පද්ධතියක් සහිත ගසකි. උපරිම අස්වැන්නක් ලබාගත හැක.",
+    "chemicalTreatment": [
+      "කිසිදු රසායනික දිලීර නාශකයක් හෝ පළිබෝධනාශකයක් අවශ්‍ය නොවේ!",
+      "පොල් පර්යේෂණ ආයතනය (CRI) නිර්දේශිත APM පොහොර මිශ්‍රණයෙන් ගසකට වසරකට කිලෝ 3ක් යල සහ මහ කන්න වලට බෙදා යොදන්න.",
+      "අම්ල සහිත පස් සඳහා වසරකට ගසකට ඩොලමයිට් (Dolomite) කිලෝ 1ක් යොදන්න."
+    ],
+    "organicTreatment": [
+      "වසරකට වරක් ගස මුලට හොඳින් දිරූ ගොම හෝ කොම්පෝස්ට් පොහොර කිලෝ 25-30 ක් යොදන්න.",
+      "පස සරු කිරීමට පේළි අතර මියුකුනා (Mucuna) වැනි රනිල බෝග වගා කරන්න.",
+      "ගසේ කඳේ සිට මීටර් 2ක් දුරින් කාණු කපා පොල් ලෙලි වැළලීමෙන් නියඟයේදී පස තෙතමනයෙන් තබාගන්න."
+    ],
+    "preventionTips": [
+      "ගස වටා මීටර් 1.5 ක වපසරියක් වල් පැලෑටි වලින් තොරව පිරිසිදුව තබාගන්න.",
+      "මසකට වරක් ගසේ ගොබය පරීක්ෂා කර රතු කුරුමිණි හෝ කළු කුරුමිණි හානි ඇත්දැයි බලන්න.",
+      "දැඩි පායන කාලයේදී සතියකට දෙවරක් ගසට ජලය සපයා ගසේ නිරෝගී බව ආරක්ෂා කරගන්න."
+    ],
+    "consultationNote": "සහනාධාර පොහොර ලබාගැනීම සහ පස පරීක්ෂා කරගැනීම සඳහා ඔබගේ ගොවිජන සේවා මධ්‍යස්ථානය අමතන්න."
+  },
+  {
+    "disease": "Healthy",
+    "language": "ta",
+    "title": "ஆரோக்கியமான தென்னை",
+    "scientificName": "Cocos nucifera",
+    "description": "பூஞ்சை அல்லது அழுகல் நோய்களின் அறிகுறிகள் அற்ற ஆரோக்கியமான மரம். பச்சை நிற மட்டைகளுடன் சிறந்த விளைச்சலை தரக்கூடியது.",
+    "chemicalTreatment": [
+      "இரசாயன பூஞ்சைக்கொல்லிகள் எதுவும் தேவையில்லை!",
+      "தென்னை ஆராய்ச்சி நிறுவனம் பரிந்துரைத்த APM உரத்தை வருடத்திற்கு 3 கிலோ வீதம் இரு பருவங்களில் இடவும்.",
+      "அமிலத்தன்மை கொண்ட மண்ணிற்கு வருடத்திற்கு 1 கிலோ டோலமைட் இடவும்."
+    ],
+    "organicTreatment": [
+      "வருடத்திற்கு 25 முதல் 30 கிலோ மக்கிய மாட்டு சாணம் அல்லது சேதன உரம் இடவும்.",
+      "தென்னை வரிசைகளுக்கு இடையே நைதரசன் சத்தை கூட்டும் பயறு வகை பயிர்களை நடவும்.",
+      "மரத்தை சுற்றி மட்டைகளை புதைத்து மழை நீரை சேமிக்கவும்."
+    ],
+    "preventionTips": [
+      "மரத்தின் அடிவாரத்தை சுற்றி 1.5 மீற்றர் பரப்பளவை களைகள் இன்றி தூய்மையாக வைக்கவும்.",
+      "வண்டுகள் (செவ்வண்டு, காண்டாமிருக வண்டு) தாக்காமல் இருக்க மாதம் ஒருமுறை மரத்தை சோதிக்கவும்.",
+      "வறட்சி காலங்களில் மரத்திற்கு தேவையான நீரை தொடர்ந்து பாய்ச்சவும்."
+    ],
+    "consultationNote": "மானிய உரம் மற்றும் வழிகாட்டல்களுக்கு உங்கள் கமநல சேவை மையத்தை தொடர்பு கொள்ளவும்."
+  }
+]

@@ -15,9 +15,11 @@ public enum AppTab: Hashable, CaseIterable {
 }
 
 public struct MainTabView: View {
-    @State private var selectedTab: AppTab = .detect
+    @State private var selectedTab: AppTab
     
-    public init() {}
+    public init(initialTab: AppTab = .detect) {
+        _selectedTab = State(initialValue: initialTab)
+    }
     
     public var body: some View {
         TabView(selection: $selectedTab) {

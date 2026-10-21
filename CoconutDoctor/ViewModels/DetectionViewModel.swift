@@ -8,6 +8,7 @@
 import UIKit
 import SwiftUI
 import Combine
+import CoreLocation
 
 @MainActor
 public final class DetectionViewModel: ObservableObject {
@@ -37,9 +38,17 @@ public final class DetectionViewModel: ObservableObject {
     @Published public var showErrorAlert: Bool = false
     
     private let mlService: MLServiceProtocol
+    private let scanRepository: ScanRepositoryProtocol
+    private let locationManager: LocationManager
     
-    public init(mlService: MLServiceProtocol? = nil) {
+    public init(
+        mlService: MLServiceProtocol? = nil,
+        scanRepository: ScanRepositoryProtocol? = nil,
+        locationManager: LocationManager? = nil
+    ) {
         self.mlService = mlService ?? DependencyContainer.shared.mlService
+        self.scanRepository = scanRepository ?? DependencyContainer.shared.scanRepository
+        self.locationManager = locationManager ?? DependencyContainer.shared.locationManager
     }
     
     public func selectImage(_ image: UIImage) {
@@ -47,6 +56,10 @@ public final class DetectionViewModel: ObservableObject {
         self.state = .idle
         self.errorMessage = nil
         self.showErrorAlert = false
+        // Request location authorization early when user prepares to diagnose
+        if !locationManager.isLocationAuthorized {
+            locationManager.requestWhenInUseAuthorization()
+        }
     }
     
     public func analyze() {
@@ -67,11 +80,48 @@ public final class DetectionViewModel: ObservableObject {
             do {
                 let result = try await mlService.classify(image: image)
                 self.state = .success(result)
+                
+                // Auto-save scan record to offline repository
+                await autoSaveScan(result: result, image: image)
             } catch {
                 let message = error.localizedDescription
                 self.state = .error(message)
                 self.presentError(message)
             }
+        }
+    }
+    
+    private func autoSaveScan(result: ClassificationResult, image: UIImage) async {
+        // Prepare optimized thumbnail
+        let thumbnail = image.preparingThumbnail(of: CGSize(width: 320, height: 320)) ?? image
+        let thumbnailData = thumbnail.jpegData(compressionQuality: 0.7)
+        
+        // Encode top predictions breakdown for faithful history viewing
+        let predictionsData = try? JSONEncoder().encode(result.topPredictions.map {
+            ClassificationResult.PredictionEntry(disease: $0.disease, confidence: $0.confidence)
+        })
+        let treatmentSnapshot = predictionsData.flatMap { String(data: $0, encoding: .utf8) }
+        
+        // Capture GPS location: live location if authorized, otherwise default to farm triangle coordinates
+        let liveCoordinate = locationManager.lastKnownCoordinate
+        let latitude: Double? = liveCoordinate?.latitude ?? LocationManager.sriLankaCoconutTriangle.latitude
+        let longitude: Double? = liveCoordinate?.longitude ?? LocationManager.sriLankaCoconutTriangle.longitude
+        
+        let record = ScanRecord(
+            id: UUID(),
+            timestamp: Date(),
+            diseaseLabel: result.disease.rawValue,
+            confidence: Double(result.confidence),
+            latitude: latitude,
+            longitude: longitude,
+            imageThumbnail: thumbnailData,
+            treatmentSnapshot: treatmentSnapshot
+        )
+        
+        do {
+            try await scanRepository.save(record)
+        } catch {
+            print("DetectionViewModel: Warning — failed to auto-save scan record: \(error)")
         }
     }
     

@@ -254,6 +254,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "CoconutDoctor requires camera access to capture coconut leaf photos for on-device disease diagnosis.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "CoconutDoctor uses your location to geo-tag detected coconut leaf diseases on your farm map.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "CoconutDoctor requires photo library access to select coconut leaf photos for disease diagnosis.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -287,6 +288,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "CoconutDoctor requires camera access to capture coconut leaf photos for on-device disease diagnosis.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "CoconutDoctor uses your location to geo-tag detected coconut leaf diseases on your farm map.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "CoconutDoctor requires photo library access to select coconut leaf photos for disease diagnosis.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

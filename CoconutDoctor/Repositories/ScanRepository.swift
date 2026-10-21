@@ -2,19 +2,43 @@
 //  ScanRepository.swift
 //  CoconutDoctor
 //
-//  Offline-first repository interface and store for coconut leaf scan records.
+//  Offline-first repository protocol and in-memory mock store for coconut leaf scan records.
 //
 
 import Foundation
 
 public protocol ScanRepositoryProtocol: Sendable {
+    func fetchAll() async throws -> [ScanRecord]
+    func save(_ scan: ScanRecord) async throws
+    func delete(id: UUID) async throws
+    func deleteAll() async throws
+    
+    // Backwards-compatible aliases
     func fetchAllScans() async throws -> [ScanRecord]
     func saveScan(_ scan: ScanRecord) async throws
     func deleteScan(id: UUID) async throws
     func clearAll() async throws
 }
 
-/// In-memory repository implementation (will be backed by Core Data in subsequent steps).
+extension ScanRepositoryProtocol {
+    public func fetchAllScans() async throws -> [ScanRecord] {
+        try await fetchAll()
+    }
+    
+    public func saveScan(_ scan: ScanRecord) async throws {
+        try await save(scan)
+    }
+    
+    public func deleteScan(id: UUID) async throws {
+        try await delete(id: id)
+    }
+    
+    public func clearAll() async throws {
+        try await deleteAll()
+    }
+}
+
+/// In-memory repository implementation (used for previews, tests, and mock verification).
 public actor ScanRepository: ScanRepositoryProtocol {
     private var records: [ScanRecord] = []
     
@@ -22,20 +46,20 @@ public actor ScanRepository: ScanRepositoryProtocol {
         self.records = initialRecords
     }
     
-    public func fetchAllScans() async throws -> [ScanRecord] {
-        return records.sorted(by: { $0.date > $1.date })
+    public func fetchAll() async throws -> [ScanRecord] {
+        return records.sorted(by: { $0.timestamp > $1.timestamp })
     }
     
-    public func saveScan(_ scan: ScanRecord) async throws {
+    public func save(_ scan: ScanRecord) async throws {
         records.removeAll(where: { $0.id == scan.id })
         records.append(scan)
     }
     
-    public func deleteScan(id: UUID) async throws {
+    public func delete(id: UUID) async throws {
         records.removeAll(where: { $0.id == id })
     }
     
-    public func clearAll() async throws {
+    public func deleteAll() async throws {
         records.removeAll()
     }
 }

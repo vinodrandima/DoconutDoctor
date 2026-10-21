@@ -13,10 +13,18 @@ struct CoconutDoctorApp: App {
     
     var body: some Scene {
         WindowGroup {
-            // Root tab view for iPhone.
-            // Note: In an upcoming step, this will adapt dynamically to
-            // NavigationSplitView when running on iPadOS or expanded horizontal size classes.
-            MainTabView()
+            let initialTab: AppTab = {
+                if ProcessInfo.processInfo.arguments.contains("-history") {
+                    return .history
+                } else if ProcessInfo.processInfo.arguments.contains("-map") {
+                    return .map
+                } else if ProcessInfo.processInfo.arguments.contains("-stats") {
+                    return .stats
+                } else {
+                    return .detect
+                }
+            }()
+            MainTabView(initialTab: initialTab)
                 .withDependencies(container)
         }
     }

@@ -10,17 +10,18 @@ import SwiftUI
 public struct ResultView: View {
     public let result: ClassificationResult
     public let image: UIImage?
+    public let isFromHistory: Bool
     public let onScanAgain: () -> Void
-    
-    @State private var showTreatmentStubAlert = false
     
     public init(
         result: ClassificationResult,
         image: UIImage? = nil,
+        isFromHistory: Bool = false,
         onScanAgain: @escaping () -> Void
     ) {
         self.result = result
         self.image = image
+        self.isFromHistory = isFromHistory
         self.onScanAgain = onScanAgain
     }
     
@@ -149,8 +150,8 @@ public struct ResultView: View {
                 
                 // MARK: - Action Buttons
                 VStack(spacing: 12) {
-                    Button {
-                        showTreatmentStubAlert = true
+                    NavigationLink {
+                        TreatmentView(disease: result.disease)
                     } label: {
                         HStack {
                             Image(systemName: "cross.case.fill")
@@ -169,8 +170,8 @@ public struct ResultView: View {
                         onScanAgain()
                     } label: {
                         HStack {
-                            Image(systemName: "arrow.counterclockwise")
-                            Text("Scan Another Leaf")
+                            Image(systemName: isFromHistory ? "arrow.left" : "arrow.counterclockwise")
+                            Text(isFromHistory ? "Back to History" : "Scan Another Leaf")
                                 .fontWeight(.medium)
                         }
                         .frame(maxWidth: .infinity)
@@ -187,11 +188,6 @@ public struct ResultView: View {
         }
         .navigationTitle("Diagnosis Result")
         .navigationBarTitleDisplayMode(.inline)
-        .alert("Treatment Advice", isPresented: $showTreatmentStubAlert) {
-            Button("OK", role: .cancel) {}
-        } message: {
-            Text("Detailed trilingual (Sinhala / Tamil / English) treatment plans for \(result.disease.displayName) will be connected in Step 4.")
-        }
     }
 }
 
