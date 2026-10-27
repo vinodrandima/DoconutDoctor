@@ -12,6 +12,7 @@ public enum AppTab: Hashable, CaseIterable {
     case history
     case map
     case stats
+    case settings
 }
 
 public struct MainTabView: View {
@@ -46,6 +47,12 @@ public struct MainTabView: View {
                     Label("Statistics", systemImage: "chart.bar.xaxis")
                 }
                 .tag(AppTab.stats)
+            
+            SettingsView()
+                .tabItem {
+                    Label("Settings", systemImage: "gearshape")
+                }
+                .tag(AppTab.settings)
         }
         .tint(.appAccent)
     }

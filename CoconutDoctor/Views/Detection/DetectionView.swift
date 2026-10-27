@@ -9,6 +9,7 @@ import SwiftUI
 import PhotosUI
 
 public struct DetectionView: View {
+    @Environment(\.dependencies) private var dependencies
     @StateObject private var viewModel: DetectionViewModel
     
     @State private var showCameraSheet = false
