@@ -18,6 +18,7 @@ public class ScanEntity: NSManagedObject {
     @NSManaged public var longitude: NSNumber?
     @NSManaged public var imageThumbnail: Data?
     @NSManaged public var treatmentSnapshot: String?
+    @NSManaged public var isSynced: Bool
 }
 
 extension ScanEntity {
@@ -45,7 +46,8 @@ extension ScanEntity {
             latitude: coordinateLatitude,
             longitude: coordinateLongitude,
             imageThumbnail: imageThumbnail,
-            treatmentSnapshot: treatmentSnapshot
+            treatmentSnapshot: treatmentSnapshot,
+            isSynced: isSynced
         )
     }
     
@@ -58,5 +60,6 @@ extension ScanEntity {
         self.coordinateLongitude = record.longitude
         self.imageThumbnail = record.imageThumbnail
         self.treatmentSnapshot = record.treatmentSnapshot
+        self.isSynced = record.isSynced
     }
 }

@@ -17,6 +17,7 @@ extension Color {
     public static let diseaseLeafRot = Color("LeafRotColor")
     public static let diseaseStemBleeding = Color("StemBleedingColor")
     public static let diseaseHealthy = Color("HealthyColor")
+    public static let appHealthy = Color("HealthyColor")
     
     /// Map disease name to its assigned theme color
     public static func color(forDisease name: String) -> Color {

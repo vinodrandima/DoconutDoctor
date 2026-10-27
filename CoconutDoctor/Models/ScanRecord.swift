@@ -19,6 +19,7 @@ public struct ScanRecord: Identifiable, Codable, Sendable, Equatable, Hashable {
     public let treatmentSnapshot: String?
     public let notes: String?
     public let imagePath: String?
+    public var isSynced: Bool
     
     // MARK: - Computed Properties
     
@@ -49,7 +50,8 @@ public struct ScanRecord: Identifiable, Codable, Sendable, Equatable, Hashable {
         imageThumbnail: Data? = nil,
         treatmentSnapshot: String? = nil,
         notes: String? = nil,
-        imagePath: String? = nil
+        imagePath: String? = nil,
+        isSynced: Bool = false
     ) {
         self.id = id
         self.timestamp = timestamp
@@ -61,6 +63,7 @@ public struct ScanRecord: Identifiable, Codable, Sendable, Equatable, Hashable {
         self.treatmentSnapshot = treatmentSnapshot
         self.notes = notes
         self.imagePath = imagePath
+        self.isSynced = isSynced
     }
     
     /// Convenience initializer accepting DiseaseType directly
@@ -74,7 +77,8 @@ public struct ScanRecord: Identifiable, Codable, Sendable, Equatable, Hashable {
         imageThumbnail: Data? = nil,
         treatmentSnapshot: String? = nil,
         notes: String? = nil,
-        imagePath: String? = nil
+        imagePath: String? = nil,
+        isSynced: Bool = false
     ) {
         self.init(
             id: id,
@@ -86,7 +90,8 @@ public struct ScanRecord: Identifiable, Codable, Sendable, Equatable, Hashable {
             imageThumbnail: imageThumbnail,
             treatmentSnapshot: treatmentSnapshot,
             notes: notes,
-            imagePath: imagePath
+            imagePath: imagePath,
+            isSynced: isSynced
         )
     }
     
