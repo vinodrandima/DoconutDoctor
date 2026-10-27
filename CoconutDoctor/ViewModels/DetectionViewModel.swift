@@ -40,15 +40,18 @@ public final class DetectionViewModel: ObservableObject {
     private let mlService: MLServiceProtocol
     private let scanRepository: ScanRepositoryProtocol
     private let locationManager: LocationManager
+    private let syncManager: SyncManager?
     
     public init(
         mlService: MLServiceProtocol? = nil,
         scanRepository: ScanRepositoryProtocol? = nil,
-        locationManager: LocationManager? = nil
+        locationManager: LocationManager? = nil,
+        syncManager: SyncManager? = nil
     ) {
         self.mlService = mlService ?? DependencyContainer.shared.mlService
         self.scanRepository = scanRepository ?? DependencyContainer.shared.scanRepository
         self.locationManager = locationManager ?? DependencyContainer.shared.locationManager
+        self.syncManager = syncManager ?? DependencyContainer.shared.syncManager
     }
     
     public func selectImage(_ image: UIImage) {
@@ -120,6 +123,7 @@ public final class DetectionViewModel: ObservableObject {
         
         do {
             try await scanRepository.save(record)
+            syncManager?.notifyLocalScanSaved()
         } catch {
             print("DetectionViewModel: Warning — failed to auto-save scan record: \(error)")
         }

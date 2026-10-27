@@ -23,7 +23,6 @@ public final class CoreDataScanRepository: ScanRepositoryProtocol, @unchecked Se
         
         persistentContainer.loadPersistentStores { storeDescription, error in
             if let error = error as NSError? {
-                // In production, log and prepare for fallback; do not fatalError in resilient code
                 print("CoreDataScanRepository: Failed to load persistent store: \(error), \(error.userInfo)")
             }
         }
@@ -43,6 +42,50 @@ public final class CoreDataScanRepository: ScanRepositoryProtocol, @unchecked Se
             request.sortDescriptors = [NSSortDescriptor(key: "timestamp", ascending: false)]
             let entities = try context.fetch(request)
             return entities.compactMap { $0.toRecord() }
+        }
+    }
+    
+    public func fetchUnsynced() async throws -> [ScanRecord] {
+        let context = container.viewContext
+        return try await context.perform {
+            let request: NSFetchRequest<ScanEntity> = ScanEntity.fetchRequest()
+            request.predicate = NSPredicate(format: "isSynced == NO OR isSynced == nil")
+            request.sortDescriptors = [NSSortDescriptor(key: "timestamp", ascending: true)]
+            let entities = try context.fetch(request)
+            return entities.compactMap { $0.toRecord() }
+        }
+    }
+    
+    public func markAsSynced(id: UUID) async throws {
+        let context = container.viewContext
+        try await context.perform {
+            let request: NSFetchRequest<ScanEntity> = ScanEntity.fetchRequest()
+            request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+            request.fetchLimit = 1
+            if let entity = try context.fetch(request).first {
+                entity.isSynced = true
+                if context.hasChanges {
+                    try context.save()
+                }
+            }
+        }
+    }
+    
+    public func saveFromRemote(_ scan: ScanRecord) async throws {
+        let context = container.viewContext
+        try await context.perform {
+            let request: NSFetchRequest<ScanEntity> = ScanEntity.fetchRequest()
+            request.predicate = NSPredicate(format: "id == %@", scan.id as CVarArg)
+            request.fetchLimit = 1
+            
+            let existing = try context.fetch(request).first
+            let entity = existing ?? ScanEntity(context: context)
+            entity.update(from: scan)
+            entity.isSynced = true // Mark as synced so we do not re-upload what we just downloaded
+            
+            if context.hasChanges {
+                try context.save()
+            }
         }
     }
     
@@ -95,7 +138,6 @@ public final class CoreDataScanRepository: ScanRepositoryProtocol, @unchecked Se
     // MARK: - Model Resolution Helper
     
     private static func resolveManagedObjectModel() -> NSManagedObjectModel {
-        // Attempt 1: Load CoconutDoctor.momd from main bundle or bundle containing ScanEntity
         let candidateBundles = [Bundle.main, Bundle(for: ScanEntity.self)] + Bundle.allBundles
         for bundle in candidateBundles {
             if let modelURL = bundle.url(forResource: "CoconutDoctor", withExtension: "momd"),
@@ -105,12 +147,10 @@ public final class CoreDataScanRepository: ScanRepositoryProtocol, @unchecked Se
             }
         }
         
-        // Attempt 2: Merged model containing non-empty entities
         if let merged = NSManagedObjectModel.mergedModel(from: candidateBundles), !merged.entities.isEmpty {
             return merged
         }
         
-        // Attempt 3: Fail-safe programmatic schema definition (e.g. for previews/unit tests)
         let model = NSManagedObjectModel()
         let entity = NSEntityDescription()
         entity.name = "ScanEntity"
@@ -158,7 +198,13 @@ public final class CoreDataScanRepository: ScanRepositoryProtocol, @unchecked Se
         treatmentAttr.attributeType = .stringAttributeType
         treatmentAttr.isOptional = true
         
-        entity.properties = [idAttr, timestampAttr, diseaseLabelAttr, confidenceAttr, latAttr, lonAttr, imageAttr, treatmentAttr]
+        let isSyncedAttr = NSAttributeDescription()
+        isSyncedAttr.name = "isSynced"
+        isSyncedAttr.attributeType = .booleanAttributeType
+        isSyncedAttr.isOptional = true
+        isSyncedAttr.defaultValue = false
+        
+        entity.properties = [idAttr, timestampAttr, diseaseLabelAttr, confidenceAttr, latAttr, lonAttr, imageAttr, treatmentAttr, isSyncedAttr]
         model.entities = [entity]
         return model
     }
