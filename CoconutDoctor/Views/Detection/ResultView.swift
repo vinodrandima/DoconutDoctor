@@ -8,6 +8,10 @@
 import SwiftUI
 
 public struct ResultView: View {
+    @Environment(\.dependencies) private var dependencies
+    @State private var isReminderScheduled: Bool = false
+    @State private var showReminderAlert: Bool = false
+    
     public let result: ClassificationResult
     public let image: UIImage?
     public let isFromHistory: Bool
@@ -166,6 +170,37 @@ public struct ResultView: View {
                         .shadow(color: primaryColor.opacity(0.3), radius: 6, x: 0, y: 3)
                     }
                     
+                    if !isHealthy {
+                        Button {
+                            Task {
+                                let success = await dependencies.notificationService.scheduleTreatmentReminder(
+                                    disease: result.disease,
+                                    afterDays: 7
+                                )
+                                if success {
+                                    isReminderScheduled = true
+                                    showReminderAlert = true
+                                }
+                            }
+                        } label: {
+                            HStack {
+                                Image(systemName: isReminderScheduled ? "checkmark.circle.fill" : "bell.badge.fill")
+                                Text(isReminderScheduled ? "7-Day Re-Inspection Reminder Set" : "Remind Me to Re-inspect in 7 Days")
+                                    .fontWeight(.semibold)
+                            }
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 14)
+                            .background(isReminderScheduled ? Color.appHealthy.opacity(0.15) : Color.appAccent.opacity(0.12))
+                            .foregroundStyle(isReminderScheduled ? Color.appHealthy : Color.appAccent)
+                            .clipShape(RoundedRectangle(cornerRadius: 14))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 14)
+                                    .stroke(isReminderScheduled ? Color.appHealthy.opacity(0.4) : Color.appAccent.opacity(0.3), lineWidth: 1)
+                            )
+                        }
+                        .disabled(isReminderScheduled)
+                    }
+                    
                     Button {
                         onScanAgain()
                     } label: {
@@ -188,6 +223,11 @@ public struct ResultView: View {
         }
         .navigationTitle("Diagnosis Result")
         .navigationBarTitleDisplayMode(.inline)
+        .alert("Follow-Up Reminder Scheduled", isPresented: $showReminderAlert) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text("CoconutDoctor will notify you in 7 days to inspect this coconut palm and verify treatment progress.")
+        }
     }
 }
 
