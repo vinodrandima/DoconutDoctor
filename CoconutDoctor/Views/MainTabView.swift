@@ -2,12 +2,13 @@
 //  MainTabView.swift
 //  CoconutDoctor
 //
-//  Root navigation tab view for iPhone (to be upgraded to NavigationSplitView on iPad).
+//  Root navigation tab view for iPhone with Home Dashboard as the primary tab.
 //
 
 import SwiftUI
 
 public enum AppTab: Hashable, CaseIterable {
+    case home
     case detect
     case history
     case map
@@ -16,14 +17,20 @@ public enum AppTab: Hashable, CaseIterable {
 }
 
 public struct MainTabView: View {
-    @State private var selectedTab: AppTab
+    @StateObject private var tabSelection: TabSelectionModel
     
-    public init(initialTab: AppTab = .detect) {
-        _selectedTab = State(initialValue: initialTab)
+    public init(initialTab: AppTab = .home) {
+        _tabSelection = StateObject(wrappedValue: TabSelectionModel(initialTab: initialTab))
     }
     
     public var body: some View {
-        TabView(selection: $selectedTab) {
+        TabView(selection: $tabSelection.selectedTab) {
+            DashboardView(tabSelection: tabSelection)
+                .tabItem {
+                    Label("Home", systemImage: "house.fill")
+                }
+                .tag(AppTab.home)
+            
             DetectionView()
                 .tabItem {
                     Label("Detect", systemImage: "camera.viewfinder")
@@ -55,6 +62,7 @@ public struct MainTabView: View {
                 .tag(AppTab.settings)
         }
         .tint(.appAccent)
+        .environmentObject(tabSelection)
     }
 }
 
