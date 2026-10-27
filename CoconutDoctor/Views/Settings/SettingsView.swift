@@ -10,6 +10,8 @@ import SwiftUI
 public struct SettingsView: View {
     @Environment(\.dependencies) private var dependencies
     @State private var showLoginSheet: Bool = false
+    @State private var showSignOutConfirmation: Bool = false
+    @State private var showExitGuestConfirmation: Bool = false
     
     public init() {}
     
@@ -18,6 +20,9 @@ public struct SettingsView: View {
             List {
                 // MARK: - Section: User Account
                 accountSection
+                
+                // MARK: - Section: Field Notifications
+                notificationsSection
                 
                 // MARK: - Section: Cloud Synchronization
                 cloudSyncSection
@@ -34,7 +39,39 @@ public struct SettingsView: View {
             .listStyle(.insetGrouped)
             .navigationTitle("Settings")
             .sheet(isPresented: $showLoginSheet) {
-                LoginView(authService: dependencies.authService)
+                AuthCoordinatorView(authService: dependencies.authService, onDismiss: { showLoginSheet = false })
+            }
+            .confirmationDialog(
+                "Sign Out",
+                isPresented: $showSignOutConfirmation,
+                titleVisibility: .visible
+            ) {
+                Button("Sign Out", role: .destructive) {
+                    UINotificationFeedbackGenerator().notificationOccurred(.success)
+                    withAnimation(.easeInOut(duration: 0.3)) {
+                        dependencies.appSettings.hasCompletedOnboarding = false
+                    }
+                    dependencies.authService.signOut()
+                }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("Your locally saved leaf diagnoses and scan history on this iPhone will remain safe. You can sign back in at any time to resume cloud sync.")
+            }
+            .confirmationDialog(
+                "Exit Guest Mode",
+                isPresented: $showExitGuestConfirmation,
+                titleVisibility: .visible
+            ) {
+                Button("Exit to Welcome Screen", role: .destructive) {
+                    UINotificationFeedbackGenerator().notificationOccurred(.success)
+                    withAnimation(.easeInOut(duration: 0.3)) {
+                        dependencies.appSettings.hasCompletedOnboarding = false
+                    }
+                    dependencies.authService.switchAccount()
+                }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("This will return you to the onboarding and sign-in screens. Your locally saved diagnosis records will not be deleted.")
             }
         }
     }
@@ -84,10 +121,11 @@ public struct SettingsView: View {
                 }
                 
                 Button(role: .destructive) {
-                    try? dependencies.authService.signOut()
+                    showSignOutConfirmation = true
                 } label: {
                     HStack {
                         Spacer()
+                        Image(systemName: "rectangle.portrait.and.arrow.right")
                         Text("Sign Out")
                             .fontWeight(.medium)
                         Spacer()
@@ -118,6 +156,18 @@ public struct SettingsView: View {
                         Image(systemName: "person.badge.key.fill")
                         Text("Sign In or Register")
                             .fontWeight(.semibold)
+                        Spacer()
+                    }
+                }
+                
+                Button(role: .destructive) {
+                    showExitGuestConfirmation = true
+                } label: {
+                    HStack {
+                        Spacer()
+                        Image(systemName: "arrow.uturn.backward.circle")
+                        Text("Exit Guest Mode")
+                            .font(.subheadline)
                         Spacer()
                     }
                 }
@@ -277,8 +327,158 @@ public struct SettingsView: View {
         }
     }
     
+    private var notificationsSection: some View {
+        Section("Field Notifications") {
+            let notificationService = dependencies.notificationService
+            let isAuthorized = notificationService.isAuthorized
+            
+            HStack {
+                Label {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Notification Status")
+                            .font(.body)
+                        Text(isAuthorized ? "Permissions Granted" : "Permissions Required")
+                            .font(.caption)
+                            .foregroundStyle(isAuthorized ? Color.appHealthy : Color.orange)
+                    }
+                } icon: {
+                    Image(systemName: isAuthorized ? "bell.badge.fill" : "bell.slash.fill")
+                        .foregroundStyle(isAuthorized ? Color.appHealthy : Color.orange)
+                }
+                Spacer()
+                if !isAuthorized {
+                    Button("Enable") {
+                        Task {
+                            await notificationService.requestAuthorization()
+                        }
+                    }
+                    .font(.subheadline.bold())
+                    .buttonStyle(.borderedProminent)
+                    .tint(Color.appAccent)
+                } else {
+                    Text("Active")
+                        .font(.subheadline.weight(.medium))
+                        .foregroundStyle(Color.appHealthy)
+                }
+            }
+            
+            Toggle(isOn: Binding(
+                get: { dependencies.appSettings.isTreatmentRemindersEnabled },
+                set: { dependencies.appSettings.isTreatmentRemindersEnabled = $0 }
+            )) {
+                Label {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Treatment Follow-Ups")
+                            .font(.body)
+                        Text("7-day re-inspection alerts for Bud Rot & Leaf Rot")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                } icon: {
+                    Image(systemName: "cross.case.fill")
+                        .foregroundStyle(Color.diseaseBudRot)
+                }
+            }
+            
+            Toggle(isOn: Binding(
+                get: { dependencies.appSettings.isWeeklyInspectionEnabled },
+                set: { newValue in
+                    dependencies.appSettings.isWeeklyInspectionEnabled = newValue
+                    if newValue {
+                        Task {
+                            await notificationService.scheduleWeeklyInspection(weekday: 1, hour: 8, minute: 0)
+                        }
+                    } else {
+                        notificationService.cancelWeeklyInspection()
+                    }
+                }
+            )) {
+                Label {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Weekly Plantation Inspection")
+                            .font(.body)
+                        Text("Sundays at 8:00 AM grove walk reminder")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                } icon: {
+                    Image(systemName: "calendar.badge.clock")
+                        .foregroundStyle(Color.appAccent)
+                }
+            }
+            
+            Toggle(isOn: Binding(
+                get: { dependencies.appSettings.isOutbreakAlertsEnabled },
+                set: { dependencies.appSettings.isOutbreakAlertsEnabled = $0 }
+            )) {
+                Label {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Outbreak & Cluster Alerts")
+                            .font(.body)
+                        Text("Warnings when contagious disease cases spike")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                } icon: {
+                    Image(systemName: "exclamationmark.triangle.fill")
+                        .foregroundStyle(Color.orange)
+                }
+            }
+            
+            Toggle(isOn: Binding(
+                get: { dependencies.appSettings.isSyncNotificationsEnabled },
+                set: { dependencies.appSettings.isSyncNotificationsEnabled = $0 }
+            )) {
+                Label {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Cloud Sync Alerts")
+                            .font(.body)
+                        Text("Alert when offline field scans sync to Firebase")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                } icon: {
+                    Image(systemName: "icloud.and.arrow.up.fill")
+                        .foregroundStyle(Color.blue)
+                }
+            }
+            
+            Button {
+                Task {
+                    await notificationService.sendTestNotification()
+                }
+            } label: {
+                HStack {
+                    Spacer()
+                    Image(systemName: "bell.and.waveform.fill")
+                    Text("Send Test Notification")
+                        .fontWeight(.semibold)
+                    Spacer()
+                }
+            }
+        }
+    }
+    
     private var aboutSection: some View {
         Section("About CoconutDoctor") {
+            HStack(spacing: 14) {
+                Image("AppLogo")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 48, height: 48)
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                    .shadow(color: Color.black.opacity(0.12), radius: 6, x: 0, y: 3)
+                
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("CoconutDoctor")
+                        .font(.headline)
+                    Text("AI Plant Health & Disease Classifier")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+            }
+            .padding(.vertical, 4)
+            
             HStack {
                 Text("App Version")
                 Spacer()
@@ -298,6 +498,15 @@ public struct SettingsView: View {
                 Spacer()
                 Text("Bud Rot, Blight, Whitefly")
                     .foregroundStyle(.secondary)
+            }
+            
+            Button {
+                withAnimation(.easeInOut(duration: 0.3)) {
+                    dependencies.appSettings.hasCompletedOnboarding = false
+                }
+            } label: {
+                Label("View Onboarding Screens", systemImage: "sparkles")
+                    .foregroundStyle(Color.appAccent)
             }
         }
     }
