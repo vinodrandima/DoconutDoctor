@@ -11,6 +11,7 @@ import SwiftUI
 public struct RootGateView: View {
     @ObservedObject var appSettings: AppSettings
     @ObservedObject var biometricService: BiometricAuthService
+    @ObservedObject var authService: AuthService
     let initialTab: AppTab
     
     @Environment(\.scenePhase) private var scenePhase
@@ -19,10 +20,12 @@ public struct RootGateView: View {
     public init(
         appSettings: AppSettings,
         biometricService: BiometricAuthService,
-        initialTab: AppTab = .detect
+        authService: AuthService? = nil,
+        initialTab: AppTab = .home
     ) {
         self.appSettings = appSettings
         self.biometricService = biometricService
+        self.authService = authService ?? DependencyContainer.shared.authService
         self.initialTab = initialTab
         
         // Cold start lock evaluation: if app lock is enabled or -locked passed, start locked
@@ -33,22 +36,40 @@ public struct RootGateView: View {
     
     public var body: some View {
         ZStack {
-            // Main app interface
-            MainTabView(initialTab: initialTab)
-                .opacity(isLocked ? 0 : 1)
-            
-            // Full-screen biometric lock screen overlay
-            if isLocked {
-                LockScreenView(
-                    biometricService: biometricService,
-                    onUnlockRequest: {
-                        await requestUnlock()
+            if !appSettings.hasCompletedOnboarding && !ProcessInfo.processInfo.arguments.contains("-bypass-onboarding") {
+                OnboardingView(
+                    onComplete: {
+                        withAnimation(.easeInOut(duration: 0.3)) {
+                            appSettings.hasCompletedOnboarding = true
+                        }
                     }
                 )
                 .transition(.opacity)
-                .zIndex(100)
+                .zIndex(200)
+            } else if authService.authState == .signedOut && !ProcessInfo.processInfo.arguments.contains("-bypass-auth") {
+                AuthCoordinatorView(authService: authService)
+                    .transition(.opacity)
+                    .zIndex(150)
+            } else {
+                // Main app interface
+                MainTabView(initialTab: initialTab)
+                    .opacity(isLocked ? 0 : 1)
+                
+                // Full-screen biometric lock screen overlay
+                if isLocked {
+                    LockScreenView(
+                        biometricService: biometricService,
+                        onUnlockRequest: {
+                            await requestUnlock()
+                        }
+                    )
+                    .transition(.opacity)
+                    .zIndex(100)
+                }
             }
         }
+        .animation(.easeInOut(duration: 0.25), value: appSettings.hasCompletedOnboarding)
+        .animation(.easeInOut(duration: 0.25), value: authService.authState)
         .animation(.easeInOut(duration: 0.25), value: isLocked)
         .onChange(of: scenePhase) { _, newPhase in
             handleScenePhaseChange(newPhase)
