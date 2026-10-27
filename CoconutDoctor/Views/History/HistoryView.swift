@@ -8,6 +8,7 @@
 import SwiftUI
 
 public struct HistoryView: View {
+    @Environment(\.dependencies) private var dependencies
     @StateObject private var viewModel: HistoryViewModel
     @State private var searchText: String = ""
     @State private var showClearConfirm: Bool = false
@@ -50,8 +51,10 @@ public struct HistoryView: View {
                         Button(role: .destructive) {
                             showClearConfirm = true
                         } label: {
-                            Label("Clear All", systemImage: "trash")
+                            Image(systemName: "trash")
+                                .foregroundStyle(.red)
                         }
+                        .accessibilityLabel("Clear All")
                     }
                 }
             }
@@ -61,7 +64,20 @@ public struct HistoryView: View {
                 titleVisibility: .visible
             ) {
                 Button("Delete All Scans", role: .destructive) {
-                    viewModel.deleteAll()
+                    if dependencies.appSettings.isAccountLockEnabled {
+                        Task {
+                            let (success, _) = await dependencies.biometricService.authenticate(
+                                reason: "Authenticate to permanently delete all diagnosis history"
+                            )
+                            if success {
+                                await MainActor.run {
+                                    viewModel.deleteAll()
+                                }
+                            }
+                        }
+                    } else {
+                        viewModel.deleteAll()
+                    }
                 }
                 Button("Cancel", role: .cancel) {}
             } message: {
@@ -161,17 +177,27 @@ public struct HistoryView: View {
             
             Spacer()
             
-            // Confidence Badge
-            Text(String(format: "%.0f%%", scan.confidence * 100))
-                .font(.subheadline.weight(.bold))
-                .foregroundStyle(scan.disease.themeColor)
-                .padding(.horizontal, 10)
-                .padding(.vertical, 5)
-                .background(scan.disease.themeColor.opacity(0.12))
-                .clipShape(Capsule())
-                .overlay(
-                    Capsule().stroke(scan.disease.themeColor.opacity(0.3), lineWidth: 1)
-                )
+            // Confidence Badge & Sync Status
+            VStack(alignment: .trailing, spacing: 4) {
+                Text(String(format: "%.0f%%", scan.confidence * 100))
+                    .font(.subheadline.weight(.bold))
+                    .foregroundStyle(scan.disease.themeColor)
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 5)
+                    .background(scan.disease.themeColor.opacity(0.12))
+                    .clipShape(Capsule())
+                    .overlay(
+                        Capsule().stroke(scan.disease.themeColor.opacity(0.3), lineWidth: 1)
+                    )
+                
+                HStack(spacing: 3) {
+                    Image(systemName: scan.isSynced ? "checkmark.icloud.fill" : "arrow.triangle.2.circlepath.icloud")
+                        .font(.system(size: 9))
+                    Text(scan.isSynced ? "Synced" : "Local")
+                        .font(.system(size: 9, weight: .medium))
+                }
+                .foregroundStyle(scan.isSynced ? Color.appHealthy : Color.secondary)
+            }
         }
         .padding(.vertical, 4)
     }
