@@ -21,6 +21,7 @@ public final class DependencyContainer: @unchecked Sendable {
         let sync = SyncManager(coreDataRepo: scanRepo, firestoreRepo: firestore, authService: auth)
         let biometric = BiometricAuthService()
         let settings = AppSettings()
+        let notifications = NotificationService()
         return DependencyContainer(
             mlService: ml,
             scanRepository: scanRepo,
@@ -29,7 +30,8 @@ public final class DependencyContainer: @unchecked Sendable {
             authService: auth,
             syncManager: sync,
             biometricService: biometric,
-            appSettings: settings
+            appSettings: settings,
+            notificationService: notifications
         )
     }()
     
@@ -45,6 +47,7 @@ public final class DependencyContainer: @unchecked Sendable {
         let sync = SyncManager(coreDataRepo: scanRepo, firestoreRepo: firestore, authService: auth)
         let biometric = BiometricAuthService()
         let settings = AppSettings()
+        let notifications = NotificationService()
         return DependencyContainer(
             mlService: ml,
             scanRepository: scanRepo,
@@ -53,7 +56,8 @@ public final class DependencyContainer: @unchecked Sendable {
             authService: auth,
             syncManager: sync,
             biometricService: biometric,
-            appSettings: settings
+            appSettings: settings,
+            notificationService: notifications
         )
     }()
     
@@ -65,6 +69,7 @@ public final class DependencyContainer: @unchecked Sendable {
     public let syncManager: SyncManager
     public let biometricService: BiometricAuthService
     public let appSettings: AppSettings
+    public let notificationService: NotificationService
     
     @MainActor
     public init(
@@ -75,7 +80,8 @@ public final class DependencyContainer: @unchecked Sendable {
         authService: AuthService? = nil,
         syncManager: SyncManager? = nil,
         biometricService: BiometricAuthService? = nil,
-        appSettings: AppSettings? = nil
+        appSettings: AppSettings? = nil,
+        notificationService: NotificationService? = nil
     ) {
         let repo = scanRepository ?? CoreDataScanRepository()
         self.mlService = mlService ?? MLService()
@@ -91,6 +97,7 @@ public final class DependencyContainer: @unchecked Sendable {
         )
         self.biometricService = biometricService ?? BiometricAuthService()
         self.appSettings = appSettings ?? AppSettings()
+        self.notificationService = notificationService ?? NotificationService()
     }
     
     /// Convenience initializer allowing mock ML service injection for previews/tests
