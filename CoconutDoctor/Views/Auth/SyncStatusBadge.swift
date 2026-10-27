@@ -71,6 +71,8 @@ public struct SettingsSheetView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.dependencies) private var dependencies
     @State private var showLoginSheet = false
+    @State private var showSignOutConfirmation = false
+    @State private var showExitGuestConfirmation = false
     
     public init(syncManager: SyncManager, authService: AuthService) {
         self.syncManager = syncManager
@@ -115,10 +117,11 @@ public struct SettingsSheetView: View {
                         }
                         
                         Button(role: .destructive) {
-                            try? authService.signOut()
+                            showSignOutConfirmation = true
                         } label: {
                             HStack {
                                 Spacer()
+                                Image(systemName: "rectangle.portrait.and.arrow.right")
                                 Text("Sign Out")
                                 Spacer()
                             }
@@ -148,6 +151,18 @@ public struct SettingsSheetView: View {
                                 Image(systemName: "person.badge.key.fill")
                                 Text("Sign In or Register")
                                     .fontWeight(.semibold)
+                                Spacer()
+                            }
+                        }
+                        
+                        Button(role: .destructive) {
+                            showExitGuestConfirmation = true
+                        } label: {
+                            HStack {
+                                Spacer()
+                                Image(systemName: "arrow.uturn.backward.circle")
+                                Text("Exit Guest Mode")
+                                    .font(.subheadline)
                                 Spacer()
                             }
                         }
@@ -334,7 +349,41 @@ public struct SettingsSheetView: View {
                 }
             }
             .sheet(isPresented: $showLoginSheet) {
-                LoginView(authService: authService)
+                AuthCoordinatorView(authService: authService, onDismiss: { showLoginSheet = false })
+            }
+            .confirmationDialog(
+                "Sign Out",
+                isPresented: $showSignOutConfirmation,
+                titleVisibility: .visible
+            ) {
+                Button("Sign Out", role: .destructive) {
+                    dismiss()
+                    UINotificationFeedbackGenerator().notificationOccurred(.success)
+                    withAnimation(.easeInOut(duration: 0.3)) {
+                        dependencies.appSettings.hasCompletedOnboarding = false
+                    }
+                    authService.signOut()
+                }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("Your locally saved leaf diagnoses and scan history on this iPhone will remain safe. You can sign back in at any time to resume cloud sync.")
+            }
+            .confirmationDialog(
+                "Exit Guest Mode",
+                isPresented: $showExitGuestConfirmation,
+                titleVisibility: .visible
+            ) {
+                Button("Exit to Welcome Screen", role: .destructive) {
+                    dismiss()
+                    UINotificationFeedbackGenerator().notificationOccurred(.success)
+                    withAnimation(.easeInOut(duration: 0.3)) {
+                        dependencies.appSettings.hasCompletedOnboarding = false
+                    }
+                    authService.switchAccount()
+                }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("This will return you to the onboarding and sign-in screens. Your locally saved diagnosis records will not be deleted.")
             }
         }
     }
