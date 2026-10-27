@@ -266,6 +266,7 @@
 				DEVELOPMENT_TEAM = 4W5KS2RJA3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "CoconutDoctor";
 				INFOPLIST_KEY_NSCameraUsageDescription = "CoconutDoctor requires camera access to capture coconut leaf photos for on-device disease diagnosis.";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "Face ID is used to securely unlock CoconutDoctor and protect your farm scan data.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "CoconutDoctor uses your location to geo-tag detected coconut leaf diseases on your farm map.";
@@ -303,6 +304,7 @@
 				DEVELOPMENT_TEAM = 4W5KS2RJA3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "CoconutDoctor";
 				INFOPLIST_KEY_NSCameraUsageDescription = "CoconutDoctor requires camera access to capture coconut leaf photos for on-device disease diagnosis.";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "Face ID is used to securely unlock CoconutDoctor and protect your farm scan data.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "CoconutDoctor uses your location to geo-tag detected coconut leaf diseases on your farm map.";

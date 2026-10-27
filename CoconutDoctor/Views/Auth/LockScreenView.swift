@@ -44,19 +44,12 @@ public struct LockScreenView: View {
                 // MARK: - Logo & Security Badge
                 VStack(spacing: 16) {
                     ZStack {
-                        Circle()
-                            .fill(Color.appAccent.opacity(0.12))
-                            .frame(width: 110, height: 110)
-                        
-                        Circle()
-                            .stroke(Color.appAccent.opacity(0.25), lineWidth: 2)
-                            .frame(width: 124, height: 124)
-                        
-                        Image(systemName: "leaf.circle.fill")
+                        Image("AppLogo")
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 64, height: 64)
-                            .foregroundStyle(Color.appAccent)
+                            .frame(width: 88, height: 88)
+                            .clipShape(RoundedRectangle(cornerRadius: 22))
+                            .shadow(color: Color.black.opacity(0.15), radius: 10, x: 0, y: 5)
                         
                         // Mini padlock badge
                         Image(systemName: "lock.shield.fill")
