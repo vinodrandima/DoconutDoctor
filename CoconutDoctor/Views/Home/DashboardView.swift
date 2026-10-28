@@ -17,6 +17,7 @@ public struct DashboardView: View {
     @State private var isAlertDismissed: Bool = false
     @State private var selectedScanForDetail: ScanRecord? = nil
     @State private var showNotificationsSheet: Bool = false
+    @State private var showStatsSheet: Bool = false
     
     public init(
         tabSelection: TabSelectionModel,
@@ -148,6 +149,18 @@ public struct DashboardView: View {
                         tabSelection.navigate(to: .detect)
                     }
                 )
+            }
+            .sheet(isPresented: $showStatsSheet) {
+                NavigationStack {
+                    StatsView()
+                        .toolbar {
+                            ToolbarItem(placement: .topBarTrailing) {
+                                Button("Done") {
+                                    showStatsSheet = false
+                                }
+                            }
+                        }
+                }
             }
         }
     }
@@ -616,7 +629,7 @@ public struct DashboardView: View {
                 Spacer()
                 
                 Button {
-                    tabSelection.navigate(to: .stats)
+                    showStatsSheet = true
                 } label: {
                     HStack(spacing: 3) {
                         Text("See full stats")
@@ -625,7 +638,7 @@ public struct DashboardView: View {
                     .font(.caption.bold())
                     .foregroundStyle(Color.appAccent)
                 }
-                .accessibilityLabel("See full statistics tab")
+                .accessibilityLabel("See full statistics details")
             }
             
             if !viewModel.statsViewModel.scansPerWeek.isEmpty {
