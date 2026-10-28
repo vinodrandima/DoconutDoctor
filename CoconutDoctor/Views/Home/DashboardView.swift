@@ -791,17 +791,33 @@ public struct DashboardView: View {
     
     private var emptyStateCard: some View {
         VStack(spacing: 16) {
-            ZStack {
-                Circle()
-                    .fill(Color.appAccent.opacity(0.12))
-                    .frame(width: 80, height: 80)
-                Image(systemName: "leaf.circle.fill")
+            ZStack(alignment: .bottomLeading) {
+                Image("DashboardHero")
                     .resizable()
-                    .scaledToFit()
-                    .frame(width: 48, height: 48)
-                    .foregroundStyle(Color.appAccent)
+                    .scaledToFill()
+                    .frame(height: 150)
+                    .clipped()
+                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                
+                LinearGradient(
+                    colors: [Color.clear, Color.black.opacity(0.75)],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+                .clipShape(RoundedRectangle(cornerRadius: 16))
+                
+                HStack(spacing: 8) {
+                    Image(systemName: "camera.viewfinder")
+                        .font(.subheadline.bold())
+                        .foregroundStyle(.yellow)
+                    Text("Ready for your first plantation diagnosis")
+                        .font(.caption.bold())
+                        .foregroundStyle(.white)
+                    Spacer()
+                }
+                .padding(12)
             }
-            .padding(.top, 8)
+            .frame(height: 150)
             
             VStack(spacing: 6) {
                 Text("Welcome to CoconutDoctor")
@@ -812,7 +828,7 @@ public struct DashboardView: View {
                     .font(.footnote)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
-                    .padding(.horizontal, 24)
+                    .padding(.horizontal, 16)
             }
             
             Button {
@@ -824,16 +840,16 @@ public struct DashboardView: View {
                         .fontWeight(.semibold)
                 }
                 .foregroundStyle(.white)
-                .padding(.horizontal, 20)
+                .padding(.horizontal, 24)
                 .padding(.vertical, 12)
                 .background(Color.appAccent)
                 .clipShape(Capsule())
-                .shadow(color: Color.appAccent.opacity(0.3), radius: 6, x: 0, y: 3)
+                .shadow(color: Color.appAccent.opacity(0.35), radius: 6, x: 0, y: 3)
             }
-            .padding(.bottom, 8)
+            .padding(.bottom, 6)
         }
         .frame(maxWidth: .infinity)
-        .padding(20)
+        .padding(16)
         .background(Color(uiColor: .secondarySystemGroupedBackground))
         .clipShape(RoundedRectangle(cornerRadius: 20))
         .overlay(
