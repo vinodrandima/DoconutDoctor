@@ -12,7 +12,6 @@ public enum AppTab: Hashable, CaseIterable {
     case detect
     case history
     case map
-    case stats
     case settings
 }
 
@@ -45,19 +44,13 @@ public struct MainTabView: View {
             
             FarmMapView()
                 .tabItem {
-                    Label("Farm Map", systemImage: "map")
+                    Label("Farm Map", systemImage: "map.fill")
                 }
                 .tag(AppTab.map)
             
-            StatsView()
-                .tabItem {
-                    Label("Statistics", systemImage: "chart.bar.xaxis")
-                }
-                .tag(AppTab.stats)
-            
             SettingsView()
                 .tabItem {
-                    Label("Settings", systemImage: "gearshape")
+                    Label("Settings", systemImage: "gearshape.fill")
                 }
                 .tag(AppTab.settings)
         }

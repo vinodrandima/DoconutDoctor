@@ -78,8 +78,6 @@ struct CoconutDoctorApp: App {
                     return .history
                 } else if ProcessInfo.processInfo.arguments.contains("-map") {
                     return .map
-                } else if ProcessInfo.processInfo.arguments.contains("-stats") {
-                    return .stats
                 } else if ProcessInfo.processInfo.arguments.contains("-settings") {
                     return .settings
                 } else {
