@@ -38,6 +38,9 @@ public struct DashboardView: View {
                         // MARK: - Section A: Farmer Greeting & Cloud Status Header
                         headerSection
                         
+                        // MARK: - Hero Banner Card with Smart AI Diagnostics
+                        heroBannerCard
+                        
                         // MARK: - Section F: Disease Outbreak Alert Banner
                         if let alert = viewModel.diseaseAlert, !isAlertDismissed {
                             diseaseAlertBanner(alert)
@@ -678,6 +681,110 @@ public struct DashboardView: View {
             RoundedRectangle(cornerRadius: 16)
                 .stroke(Color(uiColor: .separator).opacity(0.35), lineWidth: 1)
         )
+    }
+    
+    // MARK: - Hero Banner Card with Smart AI Diagnostics
+    
+    private var heroBannerCard: some View {
+        Button {
+            tabSelection.navigate(to: .detect)
+        } label: {
+            ZStack(alignment: .bottomLeading) {
+                // Background Hero Image
+                Image("DashboardHero")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(height: 195)
+                    .clipped()
+                
+                // Rich Gradient Overlays for readability and depth
+                LinearGradient(
+                    colors: [
+                        Color.black.opacity(0.35),
+                        Color.clear,
+                        Color.black.opacity(0.85)
+                    ],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+                
+                // Inner Content
+                VStack(alignment: .leading, spacing: 0) {
+                    // Top header row: Smart AI Tag + Offline Ready Badge
+                    HStack {
+                        HStack(spacing: 5) {
+                            Image(systemName: "sparkles")
+                                .font(.system(size: 10, weight: .bold))
+                                .foregroundStyle(Color.yellow)
+                            Text("AI SMART DIAGNOSIS")
+                                .font(.system(size: 10, weight: .heavy))
+                                .foregroundStyle(Color.yellow)
+                                .tracking(0.8)
+                        }
+                        
+                        Spacer()
+                        
+                        HStack(spacing: 5) {
+                            Circle()
+                                .fill(Color.green)
+                                .frame(width: 6, height: 6)
+                            Text("Offline Ready")
+                                .font(.system(size: 10, weight: .bold))
+                                .foregroundStyle(.white)
+                        }
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 4)
+                        .background(.ultraThinMaterial)
+                        .clipShape(Capsule())
+                        .overlay(
+                            Capsule().stroke(Color.white.opacity(0.2), lineWidth: 0.8)
+                        )
+                    }
+                    
+                    Spacer()
+                    
+                    // Bottom title and CTA row
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Instant Leaf Health Scanner")
+                            .font(.title3.weight(.bold))
+                            .foregroundStyle(.white)
+                            .shadow(color: .black.opacity(0.5), radius: 3, x: 0, y: 1)
+                        
+                        HStack(alignment: .center, spacing: 8) {
+                            Text("Detect Bud Rot, Leaf Rot & more in 1s")
+                                .font(.caption)
+                                .foregroundStyle(.white.opacity(0.92))
+                                .lineLimit(1)
+                            
+                            Spacer()
+                            
+                            HStack(spacing: 4) {
+                                Text("Scan Leaf")
+                                    .font(.caption.weight(.bold))
+                                Image(systemName: "arrow.right")
+                                    .font(.system(size: 10, weight: .bold))
+                            }
+                            .foregroundStyle(.white)
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 6)
+                            .background(Color.appAccent)
+                            .clipShape(Capsule())
+                            .shadow(color: Color.appAccent.opacity(0.4), radius: 4, x: 0, y: 2)
+                        }
+                    }
+                }
+                .padding(14)
+            }
+            .frame(height: 195)
+            .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                    .stroke(Color.white.opacity(0.18), lineWidth: 1)
+            )
+            .shadow(color: Color.black.opacity(0.12), radius: 10, x: 0, y: 5)
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel("Smart Coconut Diagnosis. Instant Leaf Health Scanner. Tap to scan leaf now.")
     }
     
     // MARK: - Empty State (0 Scans)
