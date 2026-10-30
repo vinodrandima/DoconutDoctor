@@ -13,6 +13,8 @@ public struct DashboardView: View {
     @ObservedObject var tabSelection: TabSelectionModel
     @StateObject private var viewModel: DashboardViewModel
     @Environment(\.dependencies) private var dependencies
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     
     @State private var isAlertDismissed: Bool = false
     @State private var selectedScanForDetail: ScanRecord? = nil
@@ -35,7 +37,7 @@ public struct DashboardView: View {
         NavigationStack {
             ScrollView {
                 ScrollViewReader { proxy in
-                    VStack(spacing: 20) {
+                    VStack(spacing: 16) {
                         // MARK: - Section A: Farmer Greeting & Cloud Status Header
                         headerSection
                         
@@ -65,9 +67,11 @@ public struct DashboardView: View {
                                 .id("miniChart")
                         }
                     }
-                    .padding(.horizontal, 16)
+                    .frame(maxWidth: horizontalSizeClass == .regular ? 540 : .infinity)
+                    .padding(.horizontal, horizontalSizeClass == .regular ? 24 : 16)
                     .padding(.top, 12)
-                    .padding(.bottom, 32)
+                    .padding(.bottom, 84)
+                    .frame(maxWidth: .infinity, alignment: .center)
                     .onAppear {
                         if ProcessInfo.processInfo.arguments.contains("-bottom") {
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
@@ -168,33 +172,46 @@ public struct DashboardView: View {
     // MARK: - A. Header Section
     
     private var headerSection: some View {
-        HStack(alignment: .top) {
-            VStack(alignment: .leading, spacing: 4) {
-                Text(Date().formatted(date: .complete, time: .omitted))
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-                    .textCase(.uppercase)
-                
-                Text("\(viewModel.greetingText), \(viewModel.farmerName)")
-                    .font(.title2.bold())
-                    .foregroundStyle(.primary)
-                
-                Text("Your coconut plantation health overview")
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
+        ViewThatFits(in: .horizontal) {
+            HStack(alignment: .top) {
+                headerTextContent
+                Spacer()
+                syncBadge
             }
-            
-            Spacer()
-            
-            // Sync status badge button
-            SyncStatusBadge(
-                syncManager: dependencies.syncManager,
-                authService: dependencies.authService
-            )
+            VStack(alignment: .leading, spacing: 10) {
+                headerTextContent
+                syncBadge
+            }
         }
         .padding(.vertical, 6)
         .accessibilityElement(children: .combine)
         .accessibilityLabel("\(viewModel.greetingText), \(viewModel.farmerName). Today is \(Date().formatted(date: .complete, time: .omitted)).")
+    }
+    
+    private var headerTextContent: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(Date().formatted(date: .complete, time: .omitted))
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .textCase(.uppercase)
+            
+            Text("\(viewModel.greetingText), \(viewModel.farmerName)")
+                .font(.title2.bold())
+                .foregroundStyle(.primary)
+                .lineLimit(2)
+                .minimumScaleFactor(0.85)
+            
+            Text("Your coconut plantation health overview")
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+        }
+    }
+    
+    private var syncBadge: some View {
+        SyncStatusBadge(
+            syncManager: dependencies.syncManager,
+            authService: dependencies.authService
+        )
     }
     
     // MARK: - F. Disease Alert Banner
@@ -248,92 +265,112 @@ public struct DashboardView: View {
     
     // MARK: - B. Quick Actions Row
     
+    // MARK: - B. Quick Actions Row
+    
     private var quickActionsSection: some View {
-        HStack(spacing: 12) {
-            // New Scan Button
-            Button {
-                tabSelection.navigate(to: .detect)
-            } label: {
-                HStack(spacing: 12) {
-                    ZStack {
-                        Circle()
-                            .fill(Color.white.opacity(0.2))
-                            .frame(width: 44, height: 44)
-                        Image(systemName: "camera.fill")
-                            .font(.title3.bold())
-                            .foregroundStyle(.white)
-                    }
-                    
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text("New Scan")
-                            .font(.headline.weight(.bold))
-                            .foregroundStyle(.white)
-                        Text("Diagnose Leaf")
-                            .font(.caption)
-                            .foregroundStyle(.white.opacity(0.85))
-                    }
-                    Spacer()
-                    Image(systemName: "chevron.right")
-                        .font(.footnote.bold())
-                        .foregroundStyle(.white.opacity(0.6))
+        Group {
+            if dynamicTypeSize.isAccessibilitySize {
+                VStack(spacing: 10) {
+                    newScanButton
+                    farmMapButton
                 }
-                .padding(14)
-                .frame(maxWidth: .infinity)
-                .background(Color.appAccent)
-                .clipShape(RoundedRectangle(cornerRadius: 16))
-                .shadow(color: Color.appAccent.opacity(0.3), radius: 8, x: 0, y: 4)
-            }
-            .accessibilityLabel("New Scan. Diagnose coconut leaf.")
-            
-            // Farm Map Button
-            Button {
-                tabSelection.navigate(to: .map)
-            } label: {
+            } else {
                 HStack(spacing: 12) {
-                    ZStack {
-                        Circle()
-                            .fill(Color.teal.opacity(0.15))
-                            .frame(width: 44, height: 44)
-                        Image(systemName: "map.fill")
-                            .font(.title3.bold())
-                            .foregroundStyle(Color.teal)
-                    }
-                    
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text("Farm Map")
-                            .font(.headline.weight(.bold))
-                            .foregroundStyle(.primary)
-                        Text("View GPS Pins")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                    }
-                    Spacer()
-                    Image(systemName: "chevron.right")
-                        .font(.footnote.bold())
-                        .foregroundStyle(.secondary.opacity(0.6))
+                    newScanButton
+                    farmMapButton
                 }
-                .padding(14)
-                .frame(maxWidth: .infinity)
-                .background(Color(uiColor: .secondarySystemGroupedBackground))
-                .clipShape(RoundedRectangle(cornerRadius: 16))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 16)
-                        .stroke(Color(uiColor: .separator).opacity(0.4), lineWidth: 1)
-                )
             }
-            .accessibilityLabel("Farm Map. View diagnosed trees on GPS map.")
         }
     }
     
-    // MARK: - C. Summary Cards Grid (2x2)
+    private var newScanButton: some View {
+        Button {
+            tabSelection.navigate(to: .detect)
+        } label: {
+            HStack(spacing: 10) {
+                ZStack {
+                    Circle()
+                        .fill(Color.white.opacity(0.2))
+                        .frame(width: 38, height: 38)
+                    Image(systemName: "camera.fill")
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundStyle(.white)
+                }
+                
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("New Scan")
+                        .font(.subheadline.bold())
+                        .foregroundStyle(.white)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
+                    Text("Diagnose Leaf")
+                        .font(.caption2)
+                        .foregroundStyle(.white.opacity(0.85))
+                        .lineLimit(1)
+                }
+                Spacer(minLength: 0)
+            }
+            .padding(12)
+            .frame(maxWidth: .infinity)
+            .background(Color.appAccent)
+            .clipShape(RoundedRectangle(cornerRadius: 16))
+            .shadow(color: Color.appAccent.opacity(0.28), radius: 6, x: 0, y: 3)
+        }
+        .accessibilityLabel("New Scan. Diagnose coconut leaf.")
+    }
+    
+    private var farmMapButton: some View {
+        Button {
+            tabSelection.navigate(to: .map)
+        } label: {
+            HStack(spacing: 10) {
+                ZStack {
+                    Circle()
+                        .fill(Color.teal.opacity(0.15))
+                        .frame(width: 38, height: 38)
+                    Image(systemName: "map.fill")
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundStyle(Color.teal)
+                }
+                
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Farm Map")
+                        .font(.subheadline.bold())
+                        .foregroundStyle(.primary)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
+                    Text("View GPS Pins")
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                        .lineLimit(1)
+                }
+                Spacer(minLength: 0)
+            }
+            .padding(12)
+            .frame(maxWidth: .infinity)
+            .background(Color(uiColor: .secondarySystemGroupedBackground))
+            .clipShape(RoundedRectangle(cornerRadius: 16))
+            .overlay(
+                RoundedRectangle(cornerRadius: 16)
+                    .stroke(Color(uiColor: .separator).opacity(0.35), lineWidth: 1)
+            )
+        }
+        .accessibilityLabel("Farm Map. View diagnosed trees on GPS map.")
+    }
+    
+    // MARK: - C. Summary Cards Grid
+    
+    private var summaryColumns: [GridItem] {
+        [
+            GridItem(.flexible(), spacing: 12),
+            GridItem(.flexible(), spacing: 12)
+        ]
+    }
     
     private var summaryCardsGrid: some View {
         LazyVGrid(
-            columns: [
-                GridItem(.flexible(), spacing: 14),
-                GridItem(.flexible(), spacing: 14)
-            ],
-            spacing: 14
+            columns: summaryColumns,
+            spacing: 12
         ) {
             // Card 1: Total Scans
             metricCard(
@@ -346,15 +383,15 @@ public struct DashboardView: View {
             .accessibilityLabel("Total Scans: \(viewModel.statsViewModel.totalScans)")
             
             // Card 2: Most Common Disease
-            VStack(alignment: .leading, spacing: 10) {
+            VStack(alignment: .leading, spacing: 8) {
                 HStack {
                     ZStack {
                         Circle()
                             .fill((viewModel.statsViewModel.mostCommonDisease?.themeColor ?? Color.secondary).opacity(0.15))
-                            .frame(width: 36, height: 36)
+                            .frame(width: 34, height: 34)
                         Circle()
                             .fill(viewModel.statsViewModel.mostCommonDisease?.themeColor ?? Color.secondary)
-                            .frame(width: 14, height: 14)
+                            .frame(width: 13, height: 13)
                     }
                     Spacer()
                 }
@@ -364,12 +401,15 @@ public struct DashboardView: View {
                         .font(.headline.bold())
                         .foregroundStyle(.primary)
                         .lineLimit(1)
+                        .minimumScaleFactor(0.8)
                     Text("Top Diagnosis")
                         .font(.caption)
                         .foregroundStyle(.secondary)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
                 }
             }
-            .padding(14)
+            .padding(12)
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(Color(uiColor: .secondarySystemGroupedBackground))
             .clipShape(RoundedRectangle(cornerRadius: 16))
@@ -380,7 +420,7 @@ public struct DashboardView: View {
             .accessibilityLabel("Most Common Diagnosis: \(viewModel.statsViewModel.mostCommonDisease?.displayName ?? "None yet")")
             
             // Card 3: Farm Health Ratio
-            VStack(alignment: .leading, spacing: 10) {
+            VStack(alignment: .leading, spacing: 8) {
                 HStack {
                     ZStack {
                         Circle()
@@ -402,12 +442,16 @@ public struct DashboardView: View {
                     Text(viewModel.healthRatioFormatted)
                         .font(.title3.bold())
                         .foregroundStyle(Color.appHealthy)
-                    Text("Farm Health Ratio")
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.8)
+                    Text("Farm Health")
                         .font(.caption)
                         .foregroundStyle(.secondary)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
                 }
             }
-            .padding(14)
+            .padding(12)
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(Color(uiColor: .secondarySystemGroupedBackground))
             .clipShape(RoundedRectangle(cornerRadius: 16))
@@ -415,17 +459,17 @@ public struct DashboardView: View {
                 RoundedRectangle(cornerRadius: 16)
                     .stroke(Color(uiColor: .separator).opacity(0.35), lineWidth: 1)
             )
-            .accessibilityLabel("Farm Health Ratio: \(viewModel.healthRatioFormatted)")
+            .accessibilityLabel("Farm Health: \(viewModel.healthRatioFormatted)")
             
             // Card 4: Scans This Week
-            VStack(alignment: .leading, spacing: 10) {
+            VStack(alignment: .leading, spacing: 8) {
                 HStack {
                     ZStack {
                         Circle()
                             .fill(Color.orange.opacity(0.15))
-                            .frame(width: 36, height: 36)
+                            .frame(width: 34, height: 34)
                         Image(systemName: "calendar.badge.clock")
-                            .font(.system(size: 16, weight: .bold))
+                            .font(.system(size: 15, weight: .bold))
                             .foregroundStyle(Color.orange)
                     }
                     Spacer()
@@ -438,12 +482,16 @@ public struct DashboardView: View {
                     Text("\(viewModel.scansThisWeekCount)")
                         .font(.title3.bold())
                         .foregroundStyle(.primary)
-                    Text("Scans This Week")
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.8)
+                    Text("This Week")
                         .font(.caption)
                         .foregroundStyle(.secondary)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
                 }
             }
-            .padding(14)
+            .padding(12)
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(Color(uiColor: .secondarySystemGroupedBackground))
             .clipShape(RoundedRectangle(cornerRadius: 16))
@@ -451,7 +499,7 @@ public struct DashboardView: View {
                 RoundedRectangle(cornerRadius: 16)
                     .stroke(Color(uiColor: .separator).opacity(0.35), lineWidth: 1)
             )
-            .accessibilityLabel("Scans This Week: \(viewModel.scansThisWeekCount)")
+            .accessibilityLabel("This Week: \(viewModel.scansThisWeekCount)")
         }
     }
     
@@ -484,13 +532,13 @@ public struct DashboardView: View {
     }
     
     private func metricCard(title: String, value: String, icon: String, iconColor: Color, footnote: String) -> some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: 8) {
             ZStack {
                 Circle()
                     .fill(iconColor.opacity(0.15))
-                    .frame(width: 36, height: 36)
+                    .frame(width: 34, height: 34)
                 Image(systemName: icon)
-                    .font(.system(size: 16, weight: .bold))
+                    .font(.system(size: 15, weight: .bold))
                     .foregroundStyle(iconColor)
             }
             
@@ -498,12 +546,16 @@ public struct DashboardView: View {
                 Text(value)
                     .font(.title3.bold())
                     .foregroundStyle(.primary)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
                 Text(title)
                     .font(.caption)
                     .foregroundStyle(.secondary)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
             }
         }
-        .padding(14)
+        .padding(12)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(Color(uiColor: .secondarySystemGroupedBackground))
         .clipShape(RoundedRectangle(cornerRadius: 16))
@@ -666,23 +718,24 @@ public struct DashboardView: View {
                 }
                 .padding(.top, 4)
             }
-            
-            // Disease breakdown chip row
-            HStack(spacing: 6) {
-                ForEach(viewModel.statsViewModel.perDiseaseCounts) { item in
-                    if item.count > 0 {
-                        HStack(spacing: 4) {
-                            Circle()
-                                .fill(item.disease.themeColor)
-                                .frame(width: 6, height: 6)
-                            Text("\(item.disease.displayName): \(item.count)")
-                                .font(.caption2.weight(.medium))
-                                .foregroundStyle(.primary)
+                       // Disease breakdown chip row (horizontally scrollable so chips never clip)
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 8) {
+                    ForEach(viewModel.statsViewModel.perDiseaseCounts) { item in
+                        if item.count > 0 {
+                            HStack(spacing: 4) {
+                                Circle()
+                                    .fill(item.disease.themeColor)
+                                    .frame(width: 6, height: 6)
+                                Text("\(item.disease.displayName): \(item.count)")
+                                    .font(.caption2.weight(.medium))
+                                    .foregroundStyle(.primary)
+                            }
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 4)
+                            .background(item.disease.themeColor.opacity(0.1))
+                            .clipShape(Capsule())
                         }
-                        .padding(.horizontal, 8)
-                        .padding(.vertical, 4)
-                        .background(item.disease.themeColor.opacity(0.1))
-                        .clipShape(Capsule())
                     }
                 }
             }
@@ -707,7 +760,7 @@ public struct DashboardView: View {
                 Image("DashboardHero")
                     .resizable()
                     .scaledToFill()
-                    .frame(height: 195)
+                    .frame(height: horizontalSizeClass == .regular ? 200 : 185)
                     .clipped()
                 
                 // Rich Gradient Overlays for readability and depth
@@ -757,38 +810,42 @@ public struct DashboardView: View {
                     Spacer()
                     
                     // Bottom title and CTA row
-                    VStack(alignment: .leading, spacing: 4) {
+                    VStack(alignment: .leading, spacing: 6) {
                         Text("Instant Leaf Health Scanner")
                             .font(.title3.weight(.bold))
                             .foregroundStyle(.white)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.85)
                             .shadow(color: .black.opacity(0.5), radius: 3, x: 0, y: 1)
                         
-                        HStack(alignment: .center, spacing: 8) {
-                            Text("Detect Bud Rot, Leaf Rot & more in 1s")
-                                .font(.caption)
-                                .foregroundStyle(.white.opacity(0.92))
-                                .lineLimit(1)
-                            
-                            Spacer()
-                            
-                            HStack(spacing: 4) {
-                                Text("Scan Leaf")
-                                    .font(.caption.weight(.bold))
-                                Image(systemName: "arrow.right")
-                                    .font(.system(size: 10, weight: .bold))
+                        ViewThatFits(in: .horizontal) {
+                            HStack(alignment: .center, spacing: 8) {
+                                Text("Detect Bud Rot, Leaf Rot & more in 1s")
+                                    .font(.caption)
+                                    .foregroundStyle(.white.opacity(0.92))
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.8)
+                                
+                                Spacer()
+                                
+                                heroScanCTA
                             }
-                            .foregroundStyle(.white)
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 6)
-                            .background(Color.appAccent)
-                            .clipShape(Capsule())
-                            .shadow(color: Color.appAccent.opacity(0.4), radius: 4, x: 0, y: 2)
+                            
+                            VStack(alignment: .leading, spacing: 6) {
+                                Text("Detect Bud Rot, Leaf Rot & more in 1s")
+                                    .font(.caption)
+                                    .foregroundStyle(.white.opacity(0.92))
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.8)
+                                
+                                heroScanCTA
+                            }
                         }
                     }
                 }
                 .padding(14)
             }
-            .frame(height: 195)
+            .frame(height: horizontalSizeClass == .regular ? 200 : 185)
             .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
             .overlay(
                 RoundedRectangle(cornerRadius: 20, style: .continuous)
@@ -800,77 +857,106 @@ public struct DashboardView: View {
         .accessibilityLabel("Smart Coconut Diagnosis. Instant Leaf Health Scanner. Tap to scan leaf now.")
     }
     
+    private var heroScanCTA: some View {
+        HStack(spacing: 4) {
+            Text("Scan Leaf")
+                .font(.caption.weight(.bold))
+            Image(systemName: "arrow.right")
+                .font(.system(size: 10, weight: .bold))
+        }
+        .foregroundStyle(.white)
+        .padding(.horizontal, 12)
+        .padding(.vertical, 6)
+        .background(Color.appAccent)
+        .clipShape(Capsule())
+        .shadow(color: Color.appAccent.opacity(0.4), radius: 4, x: 0, y: 2)
+    }
+    
     // MARK: - Empty State (0 Scans)
     
     private var emptyStateCard: some View {
         VStack(spacing: 16) {
-            ZStack(alignment: .bottomLeading) {
-                Image("DashboardHero")
-                    .resizable()
-                    .scaledToFill()
-                    .frame(height: 150)
-                    .clipped()
-                    .clipShape(RoundedRectangle(cornerRadius: 16))
-                
-                LinearGradient(
-                    colors: [Color.clear, Color.black.opacity(0.75)],
-                    startPoint: .top,
-                    endPoint: .bottom
-                )
-                .clipShape(RoundedRectangle(cornerRadius: 16))
-                
-                HStack(spacing: 8) {
-                    Image(systemName: "camera.viewfinder")
-                        .font(.subheadline.bold())
-                        .foregroundStyle(.yellow)
-                    Text("Ready for your first plantation diagnosis")
-                        .font(.caption.bold())
-                        .foregroundStyle(.white)
-                    Spacer()
-                }
-                .padding(12)
+            ZStack {
+                Circle()
+                    .fill(Color.appAccent.opacity(0.12))
+                    .frame(width: 60, height: 60)
+                Image(systemName: "camera.viewfinder")
+                    .font(.system(size: 26, weight: .bold))
+                    .foregroundStyle(Color.appAccent)
             }
-            .frame(height: 150)
+            .padding(.top, 4)
             
             VStack(spacing: 6) {
-                Text("Welcome to CoconutDoctor")
+                Text("Start Your First Plantation Diagnosis")
                     .font(.headline.bold())
                     .foregroundStyle(.primary)
+                    .multilineTextAlignment(.center)
                 
-                Text("Scan your first coconut leaf to see your farm dashboard, real-time health ratios, disease tracking, and GPS mapping.")
+                Text("CoconutDoctor uses on-device AI to detect Bud Rot, Leaf Rot, and other conditions in seconds without internet.")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 16)
             }
             
+            // 3-step quick onboarding badges
+            ViewThatFits(in: .horizontal) {
+                HStack(spacing: 10) {
+                    emptyStepItem(icon: "camera.fill", title: "Frame Leaf")
+                    emptyStepItem(icon: "sparkles", title: "AI Detect")
+                    emptyStepItem(icon: "cross.case.fill", title: "CRI Care")
+                }
+                
+                VStack(alignment: .leading, spacing: 8) {
+                    emptyStepItem(icon: "camera.fill", title: "1. Frame Coconut Leaf")
+                    emptyStepItem(icon: "sparkles", title: "2. Instant AI Diagnosis")
+                    emptyStepItem(icon: "cross.case.fill", title: "3. CRI Treatment Guide")
+                }
+            }
+            .padding(.vertical, 4)
+            
             Button {
                 tabSelection.navigate(to: .detect)
             } label: {
                 HStack(spacing: 8) {
                     Image(systemName: "camera.fill")
-                    Text("Scan First Coconut Leaf")
+                    Text("Scan Coconut Leaf Now")
                         .fontWeight(.semibold)
                 }
                 .foregroundStyle(.white)
-                .padding(.horizontal, 24)
+                .padding(.horizontal, 22)
                 .padding(.vertical, 12)
                 .background(Color.appAccent)
                 .clipShape(Capsule())
                 .shadow(color: Color.appAccent.opacity(0.35), radius: 6, x: 0, y: 3)
             }
-            .padding(.bottom, 6)
+            .padding(.bottom, 4)
         }
         .frame(maxWidth: .infinity)
-        .padding(16)
+        .padding(18)
         .background(Color(uiColor: .secondarySystemGroupedBackground))
         .clipShape(RoundedRectangle(cornerRadius: 20))
         .overlay(
             RoundedRectangle(cornerRadius: 20)
-                .stroke(Color(uiColor: .separator).opacity(0.4), lineWidth: 1)
+                .stroke(Color(uiColor: .separator).opacity(0.35), lineWidth: 1)
         )
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("Welcome to CoconutDoctor. Scan your first coconut leaf to see your farm dashboard.")
+        .accessibilityLabel("Welcome to CoconutDoctor. Tap to scan your first coconut leaf.")
+    }
+    
+    private func emptyStepItem(icon: String, title: String) -> some View {
+        HStack(spacing: 5) {
+            Image(systemName: icon)
+                .font(.system(size: 11, weight: .semibold))
+                .foregroundStyle(Color.appAccent)
+            Text(title)
+                .font(.caption2.weight(.medium))
+                .foregroundStyle(.secondary)
+        }
+        .padding(.horizontal, 10)
+        .padding(.vertical, 5)
+        .background(Color(uiColor: .tertiarySystemFill))
+        .clipShape(Capsule())
     }
 }
 
