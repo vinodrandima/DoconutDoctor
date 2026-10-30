@@ -12,6 +12,7 @@ public struct LoginView: View {
     @ObservedObject var authService: AuthService
     public var onSwitchToRegister: (() -> Void)? = nil
     public var onDismiss: (() -> Void)? = nil
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     
     private enum Field: Hashable {
         case email
@@ -56,8 +57,10 @@ public struct LoginView: View {
                     
                     Spacer(minLength: 24)
                 }
-                .padding(.horizontal, 24)
+                .frame(maxWidth: horizontalSizeClass == .regular ? 480 : .infinity)
+                .padding(.horizontal, horizontalSizeClass == .regular ? 20 : 24)
                 .padding(.vertical, 16)
+                .frame(maxWidth: .infinity)
             }
             .scrollDismissesKeyboard(.interactively)
             .background(Color(uiColor: .systemGroupedBackground))

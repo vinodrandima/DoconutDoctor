@@ -13,6 +13,7 @@ public struct OnboardingView: View {
     
     @State private var currentPage: Int = ProcessInfo.processInfo.arguments.contains("-onboarding-page2") ? 1 : 0
     @Environment(\.dependencies) private var dependencies
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     
     public init(onComplete: @escaping () -> Void) {
         self.onComplete = onComplete
@@ -47,6 +48,8 @@ public struct OnboardingView: View {
                         .padding(.horizontal, 24)
                         .padding(.bottom, 24)
                 }
+                .frame(maxWidth: horizontalSizeClass == .regular ? 540 : .infinity)
+                .frame(maxWidth: .infinity)
             }
         }
     }
@@ -91,8 +94,9 @@ public struct OnboardingView: View {
     // MARK: - Screen 1: Instant AI Leaf Diagnosis
     
     private var onboardingPageOne: some View {
-        VStack(spacing: 24) {
-            Spacer(minLength: 10)
+        ScrollView(showsIndicators: false) {
+            VStack(spacing: 20) {
+                Spacer(minLength: 6)
             
             // Hero Illustration
             ZStack {
@@ -219,9 +223,11 @@ public struct OnboardingView: View {
                     .stroke(Color(uiColor: .separator).opacity(0.35), lineWidth: 1)
             )
             
-            Spacer(minLength: 10)
+            Spacer(minLength: 8)
         }
         .padding(.horizontal, 24)
+        .padding(.vertical, 8)
+        }
         .accessibilityElement(children: .combine)
         .accessibilityLabel("Screen 1 of 2: Instant Leaf Disease Diagnosis with offline AI and CRI treatment guides.")
     }
@@ -229,8 +235,9 @@ public struct OnboardingView: View {
     // MARK: - Screen 2: Farm Telemetry & Cloud Sync
     
     private var onboardingPageTwo: some View {
-        VStack(spacing: 24) {
-            Spacer(minLength: 10)
+        ScrollView(showsIndicators: false) {
+            VStack(spacing: 20) {
+                Spacer(minLength: 6)
             
             // Hero Illustration
             ZStack {
@@ -354,9 +361,11 @@ public struct OnboardingView: View {
                     .stroke(Color(uiColor: .separator).opacity(0.35), lineWidth: 1)
             )
             
-            Spacer(minLength: 10)
+            Spacer(minLength: 8)
         }
         .padding(.horizontal, 24)
+        .padding(.vertical, 8)
+        }
         .accessibilityElement(children: .combine)
         .accessibilityLabel("Screen 2 of 2: Track Outbreaks and Farm Map with GPS tagging and cloud sync.")
     }

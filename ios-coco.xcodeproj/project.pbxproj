@@ -11,14 +11,30 @@
 		BC5CB1B5AEE681A293988F14 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = F07D6CC2215020C7ED3BCAA2 /* FirebaseAuth */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		A94734093085C794006A172D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A94733E73085C793006A172D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A94733EE3085C793006A172D;
+			remoteInfo = "ios-coco";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		A94733EF3085C793006A172D /* ios-coco.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ios-coco.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A94734023085C794006A172D /* ios-cocoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ios-cocoTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		A94733F13085C793006A172D /* CoconutDoctor */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = CoconutDoctor;
+			sourceTree = "<group>";
+		};
+		A94734013085C794006A172D /* CoconutDoctorTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = CoconutDoctorTests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -33,6 +49,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A94734043085C794006A172D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -40,6 +63,7 @@
 			isa = PBXGroup;
 			children = (
 				A94733F13085C793006A172D /* CoconutDoctor */,
+				A94734013085C794006A172D /* CoconutDoctorTests */,
 				A94733F03085C793006A172D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -48,6 +72,7 @@
 			isa = PBXGroup;
 			children = (
 				A94733EF3085C793006A172D /* ios-coco.app */,
+				A94734023085C794006A172D /* ios-cocoTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -79,6 +104,29 @@
 			productReference = A94733EF3085C793006A172D /* ios-coco.app */;
 			productType = "com.apple.product-type.application";
 		};
+		A94734003085C794006A172D /* ios-cocoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A94734063085C794006A172D /* Build configuration list for PBXNativeTarget "ios-cocoTests" */;
+			buildPhases = (
+				A94734033085C794006A172D /* Sources */,
+				A94734043085C794006A172D /* Frameworks */,
+				A94734053085C794006A172D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A947340A3085C794006A172D /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				A94734013085C794006A172D /* CoconutDoctorTests */,
+			);
+			name = "ios-cocoTests";
+			packageProductDependencies = (
+			);
+			productName = "ios-cocoTests";
+			productReference = A94734023085C794006A172D /* ios-cocoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -91,6 +139,10 @@
 				TargetAttributes = {
 					A94733EE3085C793006A172D = {
 						CreatedOnToolsVersion = 26.2;
+					};
+					A94734003085C794006A172D = {
+						CreatedOnToolsVersion = 26.2;
+						TestTargetID = A94733EE3085C793006A172D;
 					};
 				};
 			};
@@ -112,12 +164,20 @@
 			projectRoot = "";
 			targets = (
 				A94733EE3085C793006A172D /* ios-coco */,
+				A94734003085C794006A172D /* ios-cocoTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		A94733ED3085C793006A172D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A94734053085C794006A172D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -134,7 +194,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A94734033085C794006A172D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A947340A3085C794006A172D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A94733EE3085C793006A172D /* ios-coco */;
+			targetProxy = A94734093085C794006A172D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		A94733F83085C794006A172D /* Debug */ = {
@@ -266,7 +341,7 @@
 				DEVELOPMENT_TEAM = 4W5KS2RJA3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "CoconutDoctor";
+				INFOPLIST_KEY_CFBundleDisplayName = CoconutDoctor;
 				INFOPLIST_KEY_NSCameraUsageDescription = "CoconutDoctor requires camera access to capture coconut leaf photos for on-device disease diagnosis.";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "Face ID is used to securely unlock CoconutDoctor and protect your farm scan data.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "CoconutDoctor uses your location to geo-tag detected coconut leaf diseases on your farm map.";
@@ -304,7 +379,7 @@
 				DEVELOPMENT_TEAM = 4W5KS2RJA3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "CoconutDoctor";
+				INFOPLIST_KEY_CFBundleDisplayName = CoconutDoctor;
 				INFOPLIST_KEY_NSCameraUsageDescription = "CoconutDoctor requires camera access to capture coconut leaf photos for on-device disease diagnosis.";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "Face ID is used to securely unlock CoconutDoctor and protect your farm scan data.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "CoconutDoctor uses your location to geo-tag detected coconut leaf diseases on your farm map.";
@@ -332,6 +407,46 @@
 			};
 			name = Release;
 		};
+		A94734073085C794006A172D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4W5KS2RJA3;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.coconutdoctor.appTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ios-coco.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ios-coco";
+			};
+			name = Debug;
+		};
+		A94734083085C794006A172D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4W5KS2RJA3;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.coconutdoctor.appTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ios-coco.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ios-coco";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -349,6 +464,15 @@
 			buildConfigurations = (
 				A94733FB3085C794006A172D /* Debug */,
 				A94733FC3085C794006A172D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A94734063085C794006A172D /* Build configuration list for PBXNativeTarget "ios-cocoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A94734073085C794006A172D /* Debug */,
+				A94734083085C794006A172D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

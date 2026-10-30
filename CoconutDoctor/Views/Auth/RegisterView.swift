@@ -12,6 +12,7 @@ public struct RegisterView: View {
     @ObservedObject var authService: AuthService
     public let onSwitchToLogin: () -> Void
     public var onDismiss: (() -> Void)? = nil
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     
     private enum Field: Hashable {
         case fullName
@@ -58,8 +59,10 @@ public struct RegisterView: View {
                     
                     Spacer(minLength: 24)
                 }
-                .padding(.horizontal, 24)
+                .frame(maxWidth: horizontalSizeClass == .regular ? 480 : .infinity)
+                .padding(.horizontal, horizontalSizeClass == .regular ? 20 : 24)
                 .padding(.vertical, 16)
+                .frame(maxWidth: .infinity)
             }
             .scrollDismissesKeyboard(.interactively)
             .background(Color(uiColor: .systemGroupedBackground))

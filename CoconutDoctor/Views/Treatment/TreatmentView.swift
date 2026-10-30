@@ -12,6 +12,7 @@ public struct TreatmentView: View {
     
     @Environment(\.dependencies) private var dependencies
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     
     @State private var selectedLanguage: AppLanguage = .currentDeviceLanguage
     
@@ -89,8 +90,10 @@ public struct TreatmentView: View {
                     bulletPointList(items: treatment.preventionTips, bulletColor: .orange)
                 }
             }
+            .frame(maxWidth: horizontalSizeClass == .regular ? 720 : .infinity)
             .padding(.horizontal, 16)
             .padding(.vertical, 16)
+            .frame(maxWidth: .infinity)
         }
         .background(Color(.systemGroupedBackground))
         .navigationTitle(treatment.title)
@@ -100,28 +103,42 @@ public struct TreatmentView: View {
     // MARK: - Language Selector
     
     private var languageSelectorCard: some View {
-        HStack {
-            Image(systemName: "globe")
-                .foregroundStyle(.secondary)
-            
-            Text("Language / භාෂාව / மொழி:")
-                .font(.caption.weight(.semibold))
-                .foregroundStyle(.secondary)
-            
-            Spacer()
-            
-            Picker("Language", selection: $selectedLanguage) {
-                ForEach(AppLanguage.allCases) { lang in
-                    Text(lang.displayName).tag(lang)
-                }
+        ViewThatFits(in: .horizontal) {
+            HStack {
+                languageLabel
+                Spacer()
+                languagePicker
+                    .frame(maxWidth: 220)
             }
-            .pickerStyle(.segmented)
-            .frame(maxWidth: 220)
+            VStack(alignment: .leading, spacing: 8) {
+                languageLabel
+                languagePicker
+                    .frame(maxWidth: .infinity)
+            }
         }
         .padding(.horizontal, 14)
         .padding(.vertical, 10)
         .background(Color(.secondarySystemGroupedBackground))
         .clipShape(RoundedRectangle(cornerRadius: 12))
+    }
+    
+    private var languageLabel: some View {
+        HStack(spacing: 6) {
+            Image(systemName: "globe")
+                .foregroundStyle(.secondary)
+            Text("Language / භාෂාව / மொழி:")
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(.secondary)
+        }
+    }
+    
+    private var languagePicker: some View {
+        Picker("Language", selection: $selectedLanguage) {
+            ForEach(AppLanguage.allCases) { lang in
+                Text(lang.displayName).tag(lang)
+            }
+        }
+        .pickerStyle(.segmented)
     }
     
     // MARK: - Hero Header Card

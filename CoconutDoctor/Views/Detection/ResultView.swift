@@ -9,6 +9,7 @@ import SwiftUI
 
 public struct ResultView: View {
     @Environment(\.dependencies) private var dependencies
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @State private var isReminderScheduled: Bool = false
     @State private var showReminderAlert: Bool = false
     
@@ -46,7 +47,7 @@ public struct ResultView: View {
                         .resizable()
                         .scaledToFill()
                         .frame(maxWidth: .infinity)
-                        .frame(height: 220)
+                        .frame(height: horizontalSizeClass == .regular ? 320 : 220)
                         .clipShape(RoundedRectangle(cornerRadius: 18))
                         .overlay(
                             RoundedRectangle(cornerRadius: 18)
@@ -219,7 +220,9 @@ public struct ResultView: View {
                 .padding(.horizontal)
                 .padding(.bottom, 24)
             }
+            .frame(maxWidth: horizontalSizeClass == .regular ? 680 : .infinity)
             .padding(.top, 12)
+            .frame(maxWidth: .infinity)
         }
         .navigationTitle("Diagnosis Result")
         .navigationBarTitleDisplayMode(.inline)

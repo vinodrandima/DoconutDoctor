@@ -10,6 +10,7 @@ import PhotosUI
 
 public struct DetectionView: View {
     @Environment(\.dependencies) private var dependencies
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @StateObject private var viewModel: DetectionViewModel
     
     @State private var showCameraSheet = false
@@ -37,6 +38,8 @@ public struct DetectionView: View {
                     emptyStateContent
                 }
             }
+            .frame(maxWidth: horizontalSizeClass == .regular ? 620 : .infinity)
+            .frame(maxWidth: .infinity)
             .navigationTitle("CoconutDoctor")
             .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(item: $activeResult) { result in
@@ -121,38 +124,14 @@ public struct DetectionView: View {
                 }
                 
                 // Capture / Gallery Buttons
-                VStack(spacing: 14) {
-                    Button {
-                        handleCameraTap()
-                    } label: {
-                        HStack(spacing: 10) {
-                            Image(systemName: "camera.fill")
-                                .font(.headline)
-                            Text("Capture Photo")
-                                .font(.headline)
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 16)
-                        .background(Color.appAccent)
-                        .foregroundStyle(.white)
-                        .clipShape(RoundedRectangle(cornerRadius: 14))
-                        .shadow(color: Color.appAccent.opacity(0.3), radius: 8, x: 0, y: 4)
+                ViewThatFits(in: .horizontal) {
+                    HStack(spacing: 14) {
+                        captureButton
+                        galleryButton
                     }
-                    
-                    Button {
-                        showGallerySheet = true
-                    } label: {
-                        HStack(spacing: 10) {
-                            Image(systemName: "photo.on.rectangle.angled")
-                                .font(.headline)
-                            Text("Choose from Gallery")
-                                .font(.headline)
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 16)
-                        .background(Color(.secondarySystemBackground))
-                        .foregroundStyle(.primary)
-                        .clipShape(RoundedRectangle(cornerRadius: 14))
+                    VStack(spacing: 14) {
+                        captureButton
+                        galleryButton
                     }
                 }
                 .padding(.horizontal, 28)
@@ -180,6 +159,43 @@ public struct DetectionView: View {
         }
     }
     
+    private var captureButton: some View {
+        Button {
+            handleCameraTap()
+        } label: {
+            HStack(spacing: 10) {
+                Image(systemName: "camera.fill")
+                    .font(.headline)
+                Text("Capture Photo")
+                    .font(.headline)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 16)
+            .background(Color.appAccent)
+            .foregroundStyle(.white)
+            .clipShape(RoundedRectangle(cornerRadius: 14))
+            .shadow(color: Color.appAccent.opacity(0.3), radius: 8, x: 0, y: 4)
+        }
+    }
+    
+    private var galleryButton: some View {
+        Button {
+            showGallerySheet = true
+        } label: {
+            HStack(spacing: 10) {
+                Image(systemName: "photo.on.rectangle.angled")
+                    .font(.headline)
+                Text("Choose from Gallery")
+                    .font(.headline)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 16)
+            .background(Color(.secondarySystemBackground))
+            .foregroundStyle(.primary)
+            .clipShape(RoundedRectangle(cornerRadius: 14))
+        }
+    }
+    
     // MARK: - Image Preview & Analysis Card
     
     private func imagePreviewContent(_ image: UIImage) -> some View {
@@ -188,7 +204,7 @@ public struct DetectionView: View {
                 Image(uiImage: image)
                     .resizable()
                     .scaledToFit()
-                    .frame(maxHeight: 340)
+                    .frame(maxHeight: horizontalSizeClass == .regular ? 440 : 340)
                     .clipShape(RoundedRectangle(cornerRadius: 20))
                     .overlay(
                         RoundedRectangle(cornerRadius: 20)

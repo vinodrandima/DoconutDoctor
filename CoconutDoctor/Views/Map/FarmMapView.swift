@@ -10,6 +10,7 @@ import SwiftUI
 import MapKit
 
 public struct FarmMapView: View {
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @StateObject private var viewModel: MapViewModel
     @State private var navigateToDetail: ScanRecord?
     
@@ -78,6 +79,7 @@ public struct FarmMapView: View {
                             .transition(.move(edge: .bottom).combined(with: .opacity))
                     }
                 }
+                .frame(maxWidth: horizontalSizeClass == .regular ? 560 : .infinity)
                 .padding(.horizontal)
                 .padding(.bottom, 12)
             }

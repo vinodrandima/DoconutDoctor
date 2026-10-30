@@ -10,6 +10,7 @@ import SwiftUI
 import LocalAuthentication
 
 public struct LockScreenView: View {
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @ObservedObject var biometricService: BiometricAuthService
     let onUnlockRequest: () async -> Bool
     
@@ -137,6 +138,8 @@ public struct LockScreenView: View {
                 .padding(.horizontal, 28)
                 .padding(.bottom, 24)
             }
+            .frame(maxWidth: horizontalSizeClass == .regular ? 440 : .infinity)
+            .frame(maxWidth: .infinity)
         }
         .onAppear {
             // Auto prompt on view appearance unless explicitly suppressed

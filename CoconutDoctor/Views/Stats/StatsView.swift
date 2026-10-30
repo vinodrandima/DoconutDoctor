@@ -9,6 +9,7 @@ import SwiftUI
 import Charts
 
 public struct StatsView: View {
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @StateObject private var viewModel: StatsViewModel
     @State private var chartDisplayMode: ChartDisplayMode = .donut
     
@@ -68,9 +69,11 @@ public struct StatsView: View {
                 // 5. Model Accuracy / Confidence Per Disease
                 confidenceBreakdownCard
             }
+            .frame(maxWidth: horizontalSizeClass == .regular ? 860 : .infinity)
             .padding(.horizontal, 16)
             .padding(.top, 12)
             .padding(.bottom, 28)
+            .frame(maxWidth: .infinity)
         }
         .background(Color(.systemGroupedBackground).ignoresSafeArea())
     }
